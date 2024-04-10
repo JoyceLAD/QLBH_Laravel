@@ -49,6 +49,8 @@ Route::get('deletekh', [KhController::class, 'getdeletekh'])->name('getdeletekh'
 Route::post('deletekh', [KhController::class, 'postdeletekh'])->name('postdeletekh');
 Route::get('updatekh', [KhController::class, 'getupdatekh'])->name('getupdatekh');
 Route::post('updatekh', [KhController::class, 'postupdatekh'])->name('postupdatekh');
+Route::post('updatekh', [KhController::class, 'postupdatekh_home'])->name('postupdatekh_home');
+
 
 //crud dh
 Route::get('adddh', [DhController::class, 'getadddh'])->name('getadddh');
@@ -57,5 +59,10 @@ Route::get('deletedh', [DhController::class, 'getdeletedh'])->name('getdeletedh'
 Route::post('deletedh', [DhController::class, 'postdeletedh'])->name('postdeletedh');
 Route::get('updatedh', [DhController::class, 'getupdatedh'])->name('getupdatedh');
 Route::post('updatedh', [DhController::class, 'postupdatedh'])->name('postupdatedh');
+Route::post('updatedh', [DhController::class, 'postupdatedh_home'])->name('postupdatedh_home');
+
+//tk
+Route::get('updateaccount', [HomeController::class, 'getupdateaccount'])->name('getupdateaccount');
+Route::post('updateaccount', [HomeController::class, 'postupdateaccount'])->name('postupdateaccount');
 
 

@@ -33,6 +33,12 @@
     <script type="text/javascript" src="{{ asset('js/plugins/pickers/daterangepicker.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/core/app.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/pages/dashboard.js') }}"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script type="text/javascript" src="{{ asset('js/pages/components_modals.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/plugins/notifications/bootbox.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/plugins/notifications/sweet_alert.min.js') }}"></script>
+
+
     <!-- /theme JS files -->
 </head>
 
@@ -68,15 +74,6 @@
             </p>
 
 			<ul class="nav navbar-nav navbar-right">
-				<li class="dropdown language-switch">
-					@if(session('success'))
-							<div class="alert alert-success">
-								{{ session('success') }}
-							</div>
-						@endif
-
-				</li>
-
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 						<i class="icon-bubbles4"></i>
@@ -180,7 +177,7 @@
 						<li><a href="#"><i class="icon-coins"></i> My balance</a></li>
 						<li><a href="#"><span class="badge bg-teal-400 pull-right">58</span> <i class="icon-comment-discussion"></i> Messages</a></li>
 						<li class="divider"></li>
-						<li><a href="#"><i class="icon-cog5"></i> Account settings</a></li>
+						<li><a href="{{route('getupdateaccount')}}"><i class="icon-cog5"></i> Account settings</a></li>
 						<li><a href="{{ route('signout') }}"><i class="icon-switch2"></i> Logout</a></li>
 					</ul>
 				</li>
@@ -347,7 +344,7 @@
 							<!-- Marketing campaigns -->
 							<div class="panel panel-flat">
 								<div class="panel-heading">
-									<h6 class="panel-title">Danh sách đơn hàng mới nhất</h6>
+									<h3 class="panel-title">Danh sách đơn hàng mới nhất</h6>
 									<div class="heading-elements">
 										<span class="label bg-success heading-text">28 active</span>
 										<ul class="icons-list">
@@ -372,6 +369,7 @@
 												<th class="col-md-2">Mã khách hàng</th>
 												<th class="col-md">Tên đơn hàng</th>
 												<th class="col-md-2">Ngày</th>
+												<th class="col-md-2">Hành động</th>
 												<!-- <th class="text-center" style="width: 20px;"><i class="icon-arrow-down12"></i></th> -->
 											</tr>
 										</thead>
@@ -399,7 +397,21 @@
 														<div class=""><a href="#" class="text-default text-semibold">{{$dh -> ngay}}</a></div>
 													</div>
 												</td>
-
+												<td>
+													<div class="media-left">
+														<i class="fas fa-pencil cdh" style="color: green; margin-right: 5px" data-id_dh_data="{{$dh->id_dh}}" data-toggle="modal" data-target="#exampleModal1"></i>
+														<i class="fas fa-trash xdh" style="color: red" data-id="{{$dh->id_dh}}"></i>
+														<script>
+															$('.cdh').click(function () { 
+																var modal = $('#exampleModal1');
+																var modalForm = modal.find('form');
+																var id_dh = modalForm.find('#id_dh');
+																id_dh.val($(this).data('id_dh_data'));
+																console.log(id_dh.val());
+															});
+														</script>
+													</div>
+												</td>
 												<!-- <td><span class="text-muted">{{$dh -> ten_donhang}}</span></td>
 												<td><span class="text-success-600">ngay</span></td> -->
 											</tr>
@@ -407,21 +419,21 @@
 										</tbody>
 									</table>
 								</div>
-                                
-
 
 							</div>   
-                            <div class="row">
+                        </div>
+                    </div>
+					<div class="row">
 						<div class="col-lg-8">
 							<!-- Marketing campaigns -->
 							<div class="panel panel-flat">
 								<div class="panel-heading">
-									<h6 class="panel-title">Danh sách đơn hàng mới nhất</h6>
+									<h3 class="panel-title">Danh sách đơn hàng mới nhất</h6>
 									<div class="heading-elements">
 										<span class="label bg-success heading-text">28 active</span>
 										<ul class="icons-list">
-					                		<li class="dropdown">
-					                			<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i> <span class="caret"></span></a>
+											<li class="dropdown">
+												<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i> <span class="caret"></span></a>
 												<ul class="dropdown-menu dropdown-menu-right">
 													<li><a href="#"><i class="icon-sync"></i> Update data</a></li>
 													<li><a href="#"><i class="icon-list-unordered"></i> Detailed log</a></li>
@@ -429,9 +441,9 @@
 													<li class="divider"></li>
 													<li><a href="#"><i class="icon-cross3"></i> Clear list</a></li>
 												</ul>
-					                		</li>
-					                	</ul>
-				                	</div>
+											</li>
+										</ul>
+									</div>
 								</div>
 								<div class="table-responsive">
 									<table class="table text-nowrap">
@@ -439,39 +451,70 @@
 											<tr>
 												<th class="col-md-2">Mã khách hàng</th>
 												<th class="col-md-2">Tên khách hàng</th>
-												<!-- <th class="col-md-2">Tuổi</th>
-                                                <th class="col-md-2">Địa chỉ</th>
-                                                <th class="col-md-2">Nghề nghiệp</th> -->
+												<th class="col-md-2">Tuổi</th>
+												<th class="col-md-2">Địa chỉ</th>
+												<th class="col-md-2">Tên công ty</th>
+												<th class="col-md-2">Hành động</th>
 												<!-- <th class="text-center" style="width: 20px;"><i class="icon-arrow-down12"></i></th> -->
 											</tr>
 										</thead>
 										<tbody>
-                                            @foreach ($dskh as $kh )
-                                            <tr>
-                                                <td>
-                                                    <div class="media-left">
-                                                        <div class=""><a href="#" class="text-default text-semibold">{{$kh -> id_kh}}</a></div>
-                                                    </div>
-                                                </td>
-
+											@foreach ($dskh as $kh )
+											<tr>
 												<td>
 													<div class="media-left">
-														<div class=""><a href="#" class="text-default text-semibold">{{$kh -> ten}}</a></div>
+														<div class=""><a href="#" class="text-default text-semibold">{{$kh -> id_kh}}</a></div>
 													</div>
 												</td>
+	
+												<td>
+													<div class="media-left">
+														<div class=""><a href="#" class="text-default text-semibold">{{$kh -> ten}} </a></div>
+													</div>
+												</td>
+												<td>
+													<div class="media-left">
+														<div class=""><a href="#" class="text-default text-semibold">{{$kh -> tuoi}} </a></div>
+													</div>
+												</td>
+												<td>
+													<div class="media-left">
+														<div class=""><a href="#" class="text-default text-semibold">{{$kh -> dia_chi}} </a></div>
+													</div>
+												</td>
+												<td>
+													<div class="media-left">
+														<div class=""><a href="#" class="text-default text-semibold">{{$kh -> ten_congty}} </a></div>
+													</div>
+												</td>
+												<td>
+													<div class="media-left">
+														<i class="fas fa-pencil ckh" style="color: green; margin-right: 5px" data-id_kh_data="{{$kh->id_kh}}" data-toggle="modal" data-target="#exampleModal2"></i>
+														<i class="fas fa-trash xkh" style="color: red" data-id="{{$dh->id_dh}}"></i>
+														<script>
+															$('.ckh').click(function () { 
+																var modal = document.getElementById('exampleModal2');
+																var modalForm = modal.querySelector('#modalForm');
+																var id_kh = modalForm.querySelector('#id_kh');
+																id_kh.value = $(this).data('id_kh_data');	
+																console.log(id_kh.value);
+														
+															});
+														</script>
+														
+													</div>
+												</td>
+	
 											</tr>
-                                            @endforeach
+											@endforeach
 										</tbody>
 									</table>
 								</div>
 							</div>                
-                        </div>             
-                        </div>
+						</div>             
+	
+					</div>
 
-
-
-
-                    </div>
                 </div>
             </div>
 		</div>
@@ -479,7 +522,97 @@
 		<!-- /page content -->
 
 	</div>
-	<!-- /page container -->
-    <!-- <a href="{{ route('signout') }}">Đăng xuất</a> -->
+	<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLabel">Chỉnh sửa đơn hàng</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+				<form action="{{route('postupdatedh_home')}}" class="form-horizontal"id="modalForm" method="post">
+					@csrf			
+					<input type="hidden" id="id_dh" name="id_dh">		
+					<div class="form-group">
+						<label class="col-lg-3 control-label">Mã khách hàng muốn sửa:</label>
+						<div class="col-lg-9">
+							<input type="text" class="form-control" placeholder="" name="id_kh">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-lg-3 control-label">Tên đơn hàng muốn sửa:</label>
+						<div class="col-lg-9">
+							<input type="text" class="form-control" placeholder="" name="ten_donhang">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-lg-3 control-label">Ngày muốn sửa:</label>
+						<div class="col-lg-9">
+							<input type="date" class="form-control" placeholder="" name="ngay">
+						</div>
+					</div>
+					<div class="text-right">
+						<button type="submit" class="btn btn-primary">Xác nhận <i class="icon-arrow-right14 position-right"></i></button>
+					</div>
+
+				</form>  
+			</div>
+		  </div>
+		</div>
+	</div>
+	  <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLabel">Chỉnh sửa khách hàng</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+				<form action="{{route('postupdatekh_home')}}" class="form-horizontal" id="modalForm" method="post">
+					@csrf	
+					<input type="hidden" id="id_kh" name="id_kh">						
+					<div class="form-group">
+						<label class="col-lg-3 control-label">Tên khách hàng muốn sửa:</label>
+						<div class="col-lg-9">
+							<input type="text" class="form-control" placeholder="" name="ten">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-lg-3 control-label">Tuổi muốn sửa:</label>
+						<div class="col-lg-9">
+							<input type="text" class="form-control" placeholder="" name="tuoi">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-lg-3 control-label">Địa chỉ muốn sửa:</label>
+						<div class="col-lg-9">
+							<input type="text" class="form-control" placeholder="" name="dia_chi">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-lg-3 control-label">Mã công ty muốn sửa:</label>
+						<div class="col-lg-9">
+							<input type="text" class="form-control" placeholder="" name="id_ct">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-lg-3 control-label">Nghề nghiệp muốn sửa:</label>
+						<div class="col-lg-9">
+							<input type="text" class="form-control" placeholder="" name="nghe_nghiep">
+						</div>
+					</div>
+					<div class="text-right">
+						<button type="submit" class="btn btn-primary">Xác nhận <i class="icon-arrow-right14 position-right"></i></button>
+					</div>
+				</form>  
+			</div>
+		  </div>
+		</div>
+	  </div>
+	  {{-- <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus-circle" aria-hidden="true"></i> Thêm</button> --}}
 </body>
 </html>

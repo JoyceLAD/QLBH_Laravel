@@ -160,7 +160,7 @@ class DhController extends Controller
             return redirect()->route('getdeletedh')->withErrors('Đơn hàng không tồn tại');
         }
     }
-        public  function postupdatedh(Request $request)
+    public  function postupdatedh(Request $request)
     {
         $request -> validate([
             'id_dh' => 'required',
@@ -203,6 +203,51 @@ class DhController extends Controller
 
         } catch (ModelNotFoundException $e) {
             return redirect()->route('getupdatedh')->withErrors('Đơn hàng không tồn tại');
+        }        
+    }
+    public  function postupdatedh_home(Request $request)
+    {
+        $request -> validate([
+            'id_dh' => 'required',
+            'id_kh' => 'required',
+            'ten_donhang' => 'required',
+            'ngay' => 'required',
+        ]);
+        $id_kh = $request->input('id_kh');
+        $id_dh = $request->input('id_dh');
+        $id_tk = null;
+        $id_tk1 = Session::get('userId') -> id_tk;
+        if (session('role') == 'Chủ')
+        {
+            $id_tk = $id_tk1;
+
+        }else if (session('role')== 'Nhân viên')
+        {
+            $id_tk = Phanquyen::check_own($id_tk1) -> id_tk1;
+
+        }else if (session('role') == 'Trắng')
+        {
+            $id_tk = $id_tk1;        
+        }
+        try {
+            $dh = Donhang::find($id_dh, $id_tk);
+            if($dh !== null)
+            {
+                try{
+                    $r = Khachhang::findOrFail($id_kh);
+                    $dh->update($request->all());
+                    return redirect()->route('dasboard')->withSuccess('Chỉnh sửa đơn hàng thành công');
+        
+                }catch (ModelNotFoundException $e) {
+                    return redirect()->route('dasboard')->withErrors('Khách hàng không tồn tại');
+                }  
+                }else
+            {
+                return redirect()->route('dasboard')->withErrors('Đơn hàng không tồn tại');
+            }
+
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('dasboard')->withErrors('Đơn hàng không tồn tại');
         }        
     }
 

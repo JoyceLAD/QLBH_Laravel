@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Account;
 use Illuminate\Http\Request;
 use App\Models\Donhang;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Models\Phanquyen;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 
 class HomeController extends Controller{
@@ -72,5 +74,39 @@ class HomeController extends Controller{
         return $userid;
 
     }
+    public  function getupdateaccount()
+    {
+        if (Session::has('userId')) {
+            return view('Account');
+        }else
+        {
+            return redirect("login")->withSuccess('Bạn cần đăng nhập trước');
+        }
+    }
+
+    public  function postupdateaccount(Request $request)
+    {
+        $request ->validate([
+            'password' => 'required|min:6',
+            'ten' => 'required',
+
+        ],[
+            'password.min' => 'Mật khẩu cần ít nhất 6 ký tự',
+        ]);
+        $userid = Session::get('userId') -> id_tk;
+        $password = $request->input('password');
+        $ten = $request->input('ten');
+        try {
+            $kh = Account::findOrFail($userid);
+            $kh->update([
+                'password' => Hash::make($password),
+                'ten' => $ten,
+            ]);
+            return redirect()->route('getupdateaccount')->withSuccess('Chỉnh sửa tài khoản thành công');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('getupdateaccount')->withErrors('Lỗi');
+        }        
+    }
+
 
 }

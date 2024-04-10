@@ -9,7 +9,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Session;
 use App\Models\Phanquyen;
 use App\Models\Account;
-
+use App\Models\Donhang;
 
 class RoleController extends Controller
 {
@@ -36,18 +36,32 @@ class RoleController extends Controller
         $data = $request->input('username');
         $userid = Session::get('userId')->id_tk;
         $check = Phanquyen::check_duplicaterole($data);
+        $checkown = Phanquyen::check_roleforown($data);
+        $check_dh = Donhang::check_dh(($data));
         if ($check == 1) {
-            return redirect("role")->withErrors('Lỗi do đã thêm quyền cho tài khoản này trước đó');
+            return redirect("role")->withErrors('Lỗi do tài khoản đã được thêm quyền');
         } else {
-            $id_tk2 = Account::getId($data);
-            if ($id_tk2 === null) { 
-                return redirect("role")->withErrors('Tài khoản không tồn tại');
-            } else {
-                $request = Phanquyen::addrole($userid, $id_tk2);
-                if ($request) {
-                    return redirect("role")->withSuccess('Thêm quyền thành công');
-                } else {
-                    return redirect("role")->withErrors('Thêm quyền thất bại');
+            if($checkown == 1)
+            {
+                return redirect("role")->withErrors('Lỗi do tài khoản này đang làm chủ');
+            }else{
+                if($check_dh == 1)
+                {
+                    return redirect("role")->withErrors('Lỗi do tài khoản này đang có đơn hàng, chỉ có thể phân quyền cho tài khoản không có đơn hàng');
+                }else
+                {
+                    $id_tk2 = Account::getId($data);
+                    if ($id_tk2 === null) { 
+                        return redirect("role")->withErrors('Tài khoản không tồn tại');
+                    } else {
+                        $request = Phanquyen::addrole($userid, $id_tk2);
+                        if ($request) {
+                            return redirect("role")->withSuccess('Thêm quyền thành công');
+                        } else {
+                            return redirect("role")->withErrors('Thêm quyền thất bại');
+                        }
+                    }
+        
                 }
             }
         }

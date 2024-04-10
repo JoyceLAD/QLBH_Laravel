@@ -18,6 +18,7 @@ class Phanquyen extends Model
 
 
     public $timestamps = false;
+    //case phan quyen cho nhan vien
     public static function check_duplicaterole($username)
     {
         $results = Phanquyen::join('taikhoan', 'phanquyen.id_tk2', '=', 'taikhoan.id_tk')
@@ -26,6 +27,18 @@ class Phanquyen extends Model
                         ->get();
         if($results->isEmpty()){
             return 0;
+        }else return 1;
+
+    }
+    //case phan quyen cho chu
+    public static function check_roleforown($username)
+    {
+        $results = Phanquyen::join('taikhoan', 'phanquyen.id_tk1', '=', 'taikhoan.id_tk')
+        ->where('taikhoan.username', $username)
+        ->select('phanquyen.*')
+        ->get();
+        if($results->isEmpty()){
+        return 0;
         }else return 1;
 
     }

@@ -82,8 +82,9 @@ class Donhang extends Model
     // Lấy danh sách khách hàng của chủ
     public static function get_dskh($id) {
         $results = DonHang::join('khachhang', 'donhang.id_kh', '=', 'khachhang.id_kh')
+                        ->join('congty', 'khachhang.id_ct','=','congty.id_ct')
                         ->where('donhang.id_tk', $id)
-                        ->select('khachhang.*')
+                        ->select('khachhang.id_kh', 'khachhang.ten', 'khachhang.tuoi', 'khachhang.dia_chi', 'congty.ten_congty')                        
                         ->distinct('khachhang.id_kh')
                         ->get();
         return $results;
@@ -106,6 +107,19 @@ class Donhang extends Model
         ->select('*')
         ->first();
          return $result;
+    }
+
+    public static function check_dh($username)
+    {
+        $results = Donhang::join('taikhoan', 'donhang.id_tk', '=', 'taikhoan.id_tk')
+        ->where('taikhoan.username', $username)
+        ->select('donhang.*')
+        ->get();
+        if($results->isEmpty()){
+        return 0;
+        }else return 1;
+
+
     }
 
 }

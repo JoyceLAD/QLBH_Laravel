@@ -137,6 +137,32 @@ class KhController extends Controller
             return redirect()->route('getupdatekh')->withErrors('Khách hàng không tồn tại');
         }        
     }
+    public  function postupdatekh_home(Request $request)
+    {
+        $request -> validate([
+            'id_kh'=>'required',
+            'ten' => 'required',
+            'tuoi' => 'required',
+            'dia_chi' => 'required',
+            'id_ct' => 'required',
+            'nghe_nghiep' => 'required',
+        ]);
+        $id_kh = $request->input('id_kh');
+        $id_ct = $request->input('id_ct');
+        try {
+            $kh = Khachhang::findOrFail($id_kh);
+            try{
+                $ct = Congty::findOrFail($id_ct);
+                $kh->update($request->all());
+                return redirect()->route('dasboard')->withSuccess('Chỉnh sửa khách hàng thành công');
+    
+            }catch (ModelNotFoundException $e) {
+                return redirect()->route('dasboard')->withErrors('Công ty không tồn tại');
+            }  
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('dasboard')->withErrors('Khách hàng không tồn tại');
+        }        
+    }
 
 
 
