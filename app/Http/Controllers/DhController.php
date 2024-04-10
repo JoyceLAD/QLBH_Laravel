@@ -250,6 +250,40 @@ class DhController extends Controller
             return redirect()->route('dasboard')->withErrors('Đơn hàng không tồn tại');
         }        
     }
+    public function postdeletedh_home(Request $request)
+    {
+        $request->validate([
+            'id_dh' => 'required',
+        ]);
+    
+        $id_dh = $request->input('id_dh');
+        $id_tk = null;
+        $id_tk1 = Session::get('userId')->id_tk;
+    
+        if (session('role') == 'Chủ') {
+            $id_tk = $id_tk1;
+        } else if (session('role') == 'Nhân viên') {
+            $id_tk = Phanquyen::check_own($id_tk1)->id_tk1;
+        } else if (session('role') == 'Trắng') {
+            $id_tk = $id_tk1;
+        }
+    
+        try {
+            // Tìm đơn hàng dựa trên cả id_dh và id_tk
+            $dh = Donhang::where('id_dh', $id_dh)->where('id_tk', $id_tk)->firstOrFail();
+            
+            // Kiểm tra xem đơn hàng có tồn tại không
+            if ($dh) {
+                $dh->delete();
+                return redirect()->route('dasboard')->withSuccess('Xóa đơn hàng thành công');
+            } else {
+                return redirect()->route('dasboard')->withErrors('Đơn hàng không tồn tại');
+            }
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('dasboard')->withErrors('Đơn hàng không tồn tại');
+        }
+    }
+
 
 
 

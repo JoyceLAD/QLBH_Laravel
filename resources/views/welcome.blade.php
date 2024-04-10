@@ -400,15 +400,28 @@
 												<td>
 													<div class="media-left">
 														<i class="fas fa-pencil cdh" style="color: green; margin-right: 5px" data-id_dh_data="{{$dh->id_dh}}" data-toggle="modal" data-target="#exampleModal1"></i>
-														<i class="fas fa-trash xdh" style="color: red" data-id="{{$dh->id_dh}}"></i>
+														<i class="fas fa-trash xdh" style="color: red" data-id_dh_data1="{{$dh->id_dh}}" data-toggle="modal" data-target="#exampleModal3"></i>
 														<script>
-															$('.cdh').click(function () { 
-																var modal = $('#exampleModal1');
-																var modalForm = modal.find('form');
-																var id_dh = modalForm.find('#id_dh');
-																id_dh.val($(this).data('id_dh_data'));
-																console.log(id_dh.val());
+
+															$('.xdh').click(function () { 
+																var modal = document.getElementById('exampleModal3');
+																var modalForm = modal.querySelector('#modalForm');
+																var id_dh = modalForm.querySelector('#id_dh');
+																id_dh.value = $(this).data('id_dh_data1');	
+																console.log(id_dh.value);
+														
 															});
+															$('.cdh').click(function () { 
+																var modal = document.getElementById('exampleModal1');
+																var modalForm = modal.querySelector('#modalForm');
+																var id_dh = modalForm.querySelector('#id_dh');
+																id_dh.value = $(this).data('id_dh_data');	
+																console.log(id_dh.value);
+														
+															});
+
+
+
 														</script>
 													</div>
 												</td>
@@ -490,10 +503,17 @@
 												<td>
 													<div class="media-left">
 														<i class="fas fa-pencil ckh" style="color: green; margin-right: 5px" data-id_kh_data="{{$kh->id_kh}}" data-toggle="modal" data-target="#exampleModal2"></i>
-														<i class="fas fa-trash xkh" style="color: red" data-id="{{$dh->id_dh}}"></i>
+														<i class="fas fa-trash xkh" style="color: red" data-id_kh_data="{{$kh->id_kh}}" data-toggle="modal" data-target="#exampleModal4"></i>
 														<script>
 															$('.ckh').click(function () { 
 																var modal = document.getElementById('exampleModal2');
+																var modalForm = modal.querySelector('#modalForm');
+																var id_kh = modalForm.querySelector('#id_kh');
+																id_kh.value = $(this).data('id_kh_data');	
+																console.log(id_kh.value);
+															});
+															$('.xkh').click(function () { 
+																var modal = document.getElementById('exampleModal4');
 																var modalForm = modal.querySelector('#modalForm');
 																var id_kh = modalForm.querySelector('#id_kh');
 																id_kh.value = $(this).data('id_kh_data');	
@@ -605,6 +625,48 @@
 							<input type="text" class="form-control" placeholder="" name="nghe_nghiep">
 						</div>
 					</div>
+					<div class="text-right">
+						<button type="submit" class="btn btn-primary">Xác nhận <i class="icon-arrow-right14 position-right"></i></button>
+					</div>
+				</form>  
+			</div>
+		  </div>
+		</div>
+	  </div>
+	  <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLabel">Bạn có chắc muốn xóa đơn hàng</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+				<form action="{{route('postdeletedh_home')}}" class="form-horizontal" id="modalForm" method="post">
+					@csrf	
+					<input type="hidden" id="id_dh" name="id_dh">		
+					<div class="text-right">
+						<button type="submit" class="btn btn-primary">Xác nhận <i class="icon-arrow-right14 position-right"></i></button>
+					</div>
+				</form>  
+			</div>
+		  </div>
+		</div>
+	  </div>
+	  <div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel4" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLabel">Bạn có chắc muốn xóa khách hàng</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+				<form action="{{route('postdeletekh_home')}}" class="form-horizontal" id="modalForm" method="post">
+					@csrf	
+					<input type="hidden" id="id_kh" name="id_kh">						
 					<div class="text-right">
 						<button type="submit" class="btn btn-primary">Xác nhận <i class="icon-arrow-right14 position-right"></i></button>
 					</div>

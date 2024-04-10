@@ -116,7 +116,7 @@ class KhController extends Controller
         $request -> validate([
             'id_kh'=>'required',
             'ten' => 'required',
-            'tuoi' => 'required',
+            'tuoi' => 'required|integer',
             'dia_chi' => 'required',
             'id_ct' => 'required',
             'nghe_nghiep' => 'required',
@@ -142,7 +142,7 @@ class KhController extends Controller
         $request -> validate([
             'id_kh'=>'required',
             'ten' => 'required',
-            'tuoi' => 'required',
+            'tuoi' => 'required|integer',
             'dia_chi' => 'required',
             'id_ct' => 'required',
             'nghe_nghiep' => 'required',
@@ -164,7 +164,20 @@ class KhController extends Controller
         }        
     }
 
-
+    public  function postdeletekh_home(Request $request)
+    {
+        $request -> validate([
+            'id_kh' => 'required',
+        ]);
+        $id_kh = $request->input('id_kh');
+        try {
+            $company = Khachhang::findOrFail($id_kh);
+            $company->delete();
+            return redirect()->route('dasboard')->withSuccess('Xóa khách hàng thành công');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('dasboard')->withErrors('Khách hàng không tồn tại');
+        }        
+    }
 
 
 
