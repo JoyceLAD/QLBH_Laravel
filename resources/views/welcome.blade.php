@@ -271,20 +271,20 @@
 						</ul>
 
 						<ul class="breadcrumb-elements">
-							<li><a href="#"><i class="icon-comment-discussion position-left"></i> Support</a></li>
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 									<i class="icon-gear position-left"></i>
-									Settings
+									Nhập/Xuất
 									<span class="caret"></span>
 								</a>
 
 								<ul class="dropdown-menu dropdown-menu-right">
-									<li><a href="#"><i class="icon-user-lock"></i> Account security</a></li>
-									<li><a href="#"><i class="icon-statistics"></i> Analytics</a></li>
-									<li><a href="#"><i class="icon-accessibility"></i> Accessibility</a></li>
-									<li class="divider"></li>
-									<li><a href="#"><i class="icon-gear"></i> All settings</a></li>
+									<li><a href="{{route('exportdh')}}"><i class="icon-database-export"></i> Xuất đơn hàng</a></li>
+									<li><a href="{{route('exportkh')}}"><i class="icon-database-export"></i> Xuất khách hàng</a></li>
+									<li><a  data-toggle="modal" data-target="#exampleModal7"><i class="icon-import"></i> Nhập đơn hàng</a></li>
+									<li><a  data-toggle="modal" data-target="#exampleModal8"><i class="icon-import"></i> Nhập khách hàng</a></li>
+
+
 								</ul>
 							</li>
 						</ul>
@@ -468,7 +468,6 @@
 												<th class="col-md-2">Địa chỉ</th>
 												<th class="col-md-2">Tên công ty</th>
 												<th class="col-md-2">Hành động</th>
-												<!-- <th class="text-center" style="width: 20px;"><i class="icon-arrow-down12"></i></th> -->
 											</tr>
 										</thead>
 										<tbody>
@@ -667,6 +666,50 @@
 				<form action="{{route('postdeletekh_home')}}" class="form-horizontal" id="modalForm" method="post">
 					@csrf	
 					<input type="hidden" id="id_kh" name="id_kh">						
+					<div class="text-right">
+						<button type="submit" class="btn btn-primary">Xác nhận <i class="icon-arrow-right14 position-right"></i></button>
+					</div>
+				</form>  
+			</div>
+		  </div>
+		</div>
+	  </div>
+	  <div class="modal fade" id="exampleModal7" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel7" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLabel">Chọn file để nhập đơn hàng</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+				<form action="{{route('importdh')}}" class="form-horizontal" id="modalForm" method="post"enctype="multipart/form-data">
+					@csrf	
+					{{-- <input type="hidden" id="id_kh" name="id_kh">						 --}}
+					<input id="user-file" type="file" name="user_file" >
+					<div class="text-right">
+						<button type="submit" class="btn btn-primary">Xác nhận <i class="icon-arrow-right14 position-right"></i></button>
+					</div>
+				</form>  
+			</div>
+		  </div>
+		</div>
+	  </div>	  
+	  <div class="modal fade" id="exampleModal8" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel8" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLabel">Chọn file để nhập khách hàng</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+				<form action="{{route('importkh')}}" class="form-horizontal" id="modalForm" method="post" enctype="multipart/form-data">
+					@csrf	
+					{{-- <input type="hidden" id="id_kh" name="id_kh">						 --}}
+					<input id="user-file" type="file" name="user_file" >
 					<div class="text-right">
 						<button type="submit" class="btn btn-primary">Xác nhận <i class="icon-arrow-right14 position-right"></i></button>
 					</div>

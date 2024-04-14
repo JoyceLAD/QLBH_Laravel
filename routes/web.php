@@ -7,6 +7,7 @@ use App\Http\Controllers\KhController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DhController;
+use App\Http\Controllers\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +28,7 @@ Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::get('register', [AuthController::class, 'registration']);
 Route::post('register', [AuthController::class, 'register'])->name('register');
 Route::get('signout', [AuthController::class, 'signOut'])->name('signout');
-Route::get('/', [AuthController::class, 'welcome'])->name('dasboard');
+Route::get('', [AuthController::class, 'welcome'])->name('dasboard');
 // Route::get('/das', [AuthController::class, 'welcome'])->name('welcome');
 Route::get('username', [HomeController::class, 'username'])->name('username');
 Route::get('role', [RoleController::class, 'getrole'])->name('getrole');
@@ -68,5 +69,19 @@ Route::post('deletedh_home', [DhController::class, 'postdeletedh_home'])->name('
 //tk
 Route::get('updateaccount', [HomeController::class, 'getupdateaccount'])->name('getupdateaccount');
 Route::post('updateaccount', [HomeController::class, 'postupdateaccount'])->name('postupdateaccount');
+
+//Search
+Route::get('searchdh', [SearchController::class, 'getSearchdh'])->name('getsearchdh');
+Route::post('searchdh', [SearchController::class, 'postSearchdh'])->name('searchdh');
+Route::get('searchkh', [SearchController::class, 'getSearchkh'])->name('getsearchkh');
+Route::post('searchkh', [SearchController::class, 'postSearchkh'])->name('searchkh');
+
+//Export
+Route::get('exportdh', [HomeController::class, 'exportdh'])->name('exportdh');
+Route::get('exportkh', [HomeController::class, 'exportkh'])->name('exportkh');
+
+//Import
+Route::post('importdh', [HomeController::class, 'importdh'])->name('importdh');
+Route::post('importkh', [HomeController::class, 'importkh'])->name('importkh');
 
 

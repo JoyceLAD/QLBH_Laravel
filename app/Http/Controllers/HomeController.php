@@ -10,7 +10,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Models\Phanquyen;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\DhExport;
+use App\Exports\KhExport;
+use App\Imports\DhImport;
+use App\Imports\KhImport;
 
 class HomeController extends Controller{
     public function tkh()
@@ -106,6 +110,24 @@ class HomeController extends Controller{
         } catch (ModelNotFoundException $e) {
             return redirect()->route('getupdateaccount')->withErrors('Lỗi');
         }        
+    }
+    public function exportdh() 
+    {
+        return Excel::download(new DhExport, 'DH.xlsx');
+    }
+    public function exportkh() 
+    {
+        return Excel::download(new KhExport, 'DH.xlsx');
+    }
+    public function importdh() 
+    {
+        $import = Excel::import(new DhImport, request()->file('user_file'));
+        return redirect()->back()->with('success', 'Success!!!');
+    }
+    public function importkh() 
+    {
+        $import = Excel::import(new KhImport, request()->file('user_file'));
+        return redirect()->back()->with('success', 'Success!!!');
     }
 
 

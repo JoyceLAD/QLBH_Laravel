@@ -83,6 +83,7 @@ class AuthController extends Controller
                     return view('welcome');
                 }
             }
+    }else{
         return redirect("login")->withSuccess('Bạn cần đăng nhập trước');
     }
 
