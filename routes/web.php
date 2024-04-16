@@ -30,9 +30,14 @@ Route::post('register', [AuthController::class, 'register'])->name('register');
 Route::get('signout', [AuthController::class, 'signOut'])->name('signout');
 Route::get('', [AuthController::class, 'welcome'])->name('dasboard');
 // Route::get('/das', [AuthController::class, 'welcome'])->name('welcome');
+
+//Role
 Route::get('username', [HomeController::class, 'username'])->name('username');
 Route::get('role', [RoleController::class, 'getrole'])->name('getrole');
 Route::post('role', [RoleController::class, 'postrole'])->name('postrole');
+Route::get('listRole',[RoleController::class,'getlistRole'])->name(('getlistRole'));
+Route::get('list',[RoleController::class,'list'])->name(('list'));
+
 
 //crud cty
 

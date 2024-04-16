@@ -84,6 +84,15 @@ class Phanquyen extends Model
             return null;
         }
     }
+    public static function listRole($id)
+    {
+        $result1 = Phanquyen::join('taikhoan','taikhoan.id_tk','=','phanquyen.id_tk2')
+        ->where('phanquyen.id_tk1',$id)
+        ->select('taikhoan.*')
+        ->get();
+        return $result1;        
+
+    }
 
 
     

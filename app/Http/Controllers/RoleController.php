@@ -66,4 +66,35 @@ class RoleController extends Controller
             }
         }
     }
+    public function list()
+    {
+        return view('listrole');
+    }
+    public function getlistRole()
+    {
+        $role = Session::get('role');
+        $id = Session::get('userId')->id_tk;
+        if($id == null)
+        {
+            return redirect("login")->withErrors('Bạn cần đăng nhập trước');
+        }else if($role =="Nhân viên")
+        {
+            return redirect()->route('list')->withErrors('Tài khoản hiện đã được phân quyền bởi tài khoản khác');
+        }else if($role == "Trắng")
+        {
+            return redirect()->route('list')->withSuccess('Bạn chưa phân quyền cho tài khoản nào');
+        }else if($role == "Chủ")
+        {
+            return redirect()->route('list');
+        }
+
+        // {
+        //     return view('listrole');
+        // }
+    }
+    public function listRole()
+    {
+        $id = Session::get('userId')->id_tk;
+        return Phanquyen::listRole($id);
+    }
     }
