@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\Phanquyen;
 use App\Models\Account;
 use App\Models\Donhang;
-
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 class RoleController extends Controller
 {
     public function getrole()
@@ -97,4 +97,49 @@ class RoleController extends Controller
         $id = Session::get('userId')->id_tk;
         return Phanquyen::listRole($id);
     }
+    public function deleterole1(Request $request)
+    {
+        $request -> validate([
+            'id_pq' => 'required',
+        ]);
+        $id = $request->input('id_pq');
+
+        try {
+            $pq = Phanquyen::where('phanquyen.id_pq', $id)->firstOrFail();
+            
+            if ($pq) {
+                $pq->delete();
+                return redirect()->route('list')->withSuccess('Xóa quyền thành công');
+            } else {
+                return redirect()->route('list')->withErrors('Mã phân quyền không tồn tại');
+            }
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('list')->withErrors('Mã phân quyền không tồn tại');
+        }
+    }
+    public function deleterole2(Request $request)
+    {
+        $request -> validate([
+            'username' => 'required',
+        ]);
+        $username = $request->input('username');
+
+        $id = Session::get('userId')->id_tk;
+        try {
+            $pq = Phanquyen::join('taikhoan','taikhoan.id_tk','=','phanquyen.id_tk2')
+            ->where('taikhoan.username', $username)
+            ->where('phanquyen.id_tk1', $id)
+            ->firstOrFail();
+            
+            if ($pq) {
+                $pq->delete();
+                return redirect()->route('list')->withSuccess('Xóa quyền thành công');
+            } else {
+                return redirect()->route('list')->withErrors('Mã phân quyền không tồn tại');
+            }
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('list')->withErrors('Mã phân quyền không tồn tại');
+        }
+    }
+
     }

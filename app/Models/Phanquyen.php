@@ -88,11 +88,11 @@ class Phanquyen extends Model
     {
         $result1 = Phanquyen::join('taikhoan','taikhoan.id_tk','=','phanquyen.id_tk2')
         ->where('phanquyen.id_tk1',$id)
-        ->select('taikhoan.*')
+        ->select('taikhoan.*','phanquyen.id_pq')
         ->get();
         return $result1;        
-
     }
+ 
 
 
     

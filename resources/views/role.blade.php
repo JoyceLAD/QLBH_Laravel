@@ -323,7 +323,6 @@
 		<!-- /page content -->
 
 	</div>
-	<!-- /page container -->
-    <!-- <a href="{{ route('signout') }}">Đăng xuất</a> -->
+
 </body>
 </html>

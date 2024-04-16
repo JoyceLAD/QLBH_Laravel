@@ -21,12 +21,6 @@
     <script type="text/javascript" src="{{ asset('js/core/libraries/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/core/libraries/bootstrap.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/plugins/loaders/blockui.min.js') }}"></script>
-    <script type="text/javascript" src="assets/js/plugins/notifications/pnotify.min.js"></script>
-
-
-    <script type="text/javascript" src="{{ asset('js/plugins/notifications/pnotify.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/pages/components_notifications_pnotify.js') }}"></script>
-
     <!-- /core JS files -->
 
     <!-- Theme JS files -->
@@ -39,7 +33,12 @@
     <script type="text/javascript" src="{{ asset('js/plugins/pickers/daterangepicker.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/core/app.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/pages/dashboard.js') }}"></script>
-    <!-- /theme JS files -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script type="text/javascript" src="{{ asset('js/pages/components_modals.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/plugins/notifications/bootbox.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/plugins/notifications/sweet_alert.min.js') }}"></script>
+
+
 </head>
 
 <body>
@@ -294,6 +293,8 @@
 												<th class="col-md-2">Mã tài khoản</th>
 												<th class="col-md-2">Username</th>\
                                                 <th class="col-md-2">Tên</th>
+												<th class="col-md-2"></th>
+
 											</tr>
 										</thead>
 										<tbody>
@@ -313,6 +314,26 @@
                                                 <td>
 													<div class="media-left">
 														<div class=""><a href="#" class="text-default text-semibold">{{$listRole -> ten}}</a></div>
+													</div>
+												</td>
+												<td>
+													<div class="media-left">
+														<i class="fas fa-trash xr" style="color: red" data-id_pq_data1="{{$listRole-> id_pq}}" data-toggle="modal" data-target="#exampleModal4"></i>
+														<script>
+
+															$('.xr').click(function () { 
+																var modal = document.getElementById('exampleModal4');
+																var modalForm = modal.querySelector('#modalForm');
+																var id_pq = modalForm.querySelector('#id_pq');
+																id_pq.value = $(this).data('id_pq_data1');	
+																console.log(id_pq.value);
+														
+															});
+
+
+
+
+														</script>
 													</div>
 												</td>
 											</tr>
@@ -347,6 +368,25 @@
 
 	</div>
 	<!-- /page container -->
-    <!-- <a href="{{ route('signout') }}">Đăng xuất</a> -->
-</body>
+	<div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel4" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLabel">Bạn có chắc muốn xóa khách hàng</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+				<form action="{{route('postdeleterole1')}}" class="form-horizontal" id="modalForm" method="post">
+					@csrf	
+					<input type="hidden" id="id_pq" name="id_pq">						
+					<div class="text-right">
+						<button type="submit" class="btn btn-primary">Xác nhận <i class="icon-arrow-right14 position-right"></i></button>
+					</div>
+				</form>  
+			</div>
+		  </div>
+		</div>
+	  </div></body>
 </html>

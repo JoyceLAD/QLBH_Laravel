@@ -37,6 +37,9 @@ Route::get('role', [RoleController::class, 'getrole'])->name('getrole');
 Route::post('role', [RoleController::class, 'postrole'])->name('postrole');
 Route::get('listRole',[RoleController::class,'getlistRole'])->name(('getlistRole'));
 Route::get('list',[RoleController::class,'list'])->name(('list'));
+Route::post('deleterole1', [RoleController::class, 'deleterole1'])->name('postdeleterole1');
+Route::post('deleterole2', [RoleController::class, 'deleterole2'])->name('postdeleterole2');
+
 
 
 //crud cty
