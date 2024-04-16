@@ -468,6 +468,7 @@
 												<th class="col-md-2">Địa chỉ</th>
 												<th class="col-md-2">Tên công ty</th>
 												<th class="col-md-2">Hành động</th>
+												<th class="col-md-2"></th>
 											</tr>
 										</thead>
 										<tbody>
@@ -522,6 +523,9 @@
 														</script>
 														
 													</div>
+												</td>
+												<td>
+													<a href="{{ route('detailkh1', ['id' => $kh->id_kh]) }}"><button type="button" class="btn btn-default"><i class="icon-make-group position-left"></i> Chi tiết</button></a>
 												</td>
 	
 											</tr>

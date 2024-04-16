@@ -92,4 +92,4 @@ Route::get('exportkh', [HomeController::class, 'exportkh'])->name('exportkh');
 Route::post('importdh', [HomeController::class, 'importdh'])->name('importdh');
 Route::post('importkh', [HomeController::class, 'importkh'])->name('importkh');
 
-
+Route::get('/detailkh/{id}',[KhController::class,'detailkh'])->name('detailkh1');

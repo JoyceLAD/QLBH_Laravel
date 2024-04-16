@@ -118,8 +118,6 @@ class Donhang extends Model
         if($results->isEmpty()){
         return 0;
         }else return 1;
-
-
     }
 
 }

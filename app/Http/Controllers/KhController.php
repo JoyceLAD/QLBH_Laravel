@@ -178,6 +178,10 @@ class KhController extends Controller
             return redirect()->route('dasboard')->withErrors('Khách hàng không tồn tại');
         }        
     }
+    public function detailkh($id)
+    {
+        $result = Khachhang::detailkh($id);
+        return view('detailkh')->with('result', $result);    }
 
 
 
