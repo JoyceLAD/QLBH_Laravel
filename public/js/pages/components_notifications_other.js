@@ -88,13 +88,15 @@ $(function() {
         });
     });
 
-    // Danger notification
+    //Danger notification
     $('#jgrowl-danger').on('click', function () {
         $.jGrowl('Change a few things up and try submitting again', {
-            header: 'Oh snap!',
+            header: errorMessage,
             theme: 'bg-danger'
         });
     });
+
+
 
     // Success notification
     $('#jgrowl-success').on('click', function () {
@@ -329,3 +331,4 @@ $(function() {
     });
     
 });
+

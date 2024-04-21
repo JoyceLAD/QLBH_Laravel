@@ -22,6 +22,8 @@
     <script type="text/javascript" src="{{ asset('js/core/libraries/bootstrap.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/plugins/loaders/blockui.min.js') }}"></script>
     <!-- /core JS files -->
+	<script type="text/javascript" src="{{ asset('js/plugins/notifications/pnotify.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/pages/components_notifications_pnotify.js') }}"></script>
 
     <!-- Theme JS files -->
     <script type="text/javascript" src="{{ asset('js/plugins/visualization/d3/d3.min.js') }}"></script>
@@ -32,7 +34,6 @@
     <script type="text/javascript" src="{{ asset('js/plugins/ui/moment/moment.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/plugins/pickers/daterangepicker.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/core/app.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/pages/dashboard.js') }}"></script>
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <script type="text/javascript" src="{{ asset('js/pages/components_modals.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('js/plugins/notifications/bootbox.min.js') }}"></script>
@@ -228,26 +229,31 @@
 								<li>
 									<a href="#"><i class="icon-people"></i> <span>Quản lý khách hàng</span></a>
 									<ul>
-                                    <li><a href="{{route('getaddkh')}}">Thêm khách hàng</a></li>
+										<li ><a href="{{route('getaddkh')}}">Thêm khách hàng</a></li>
 										<li ><a href="{{route('getdeletekh')}}">Xóa khách hàng</a></li>
-                                        <li><a href="{{route('getupdatekh')}}">Chỉnh sửa khách hàng</a></li>
+                                        <li ><a href="{{route('getupdatekh')}}">Chỉnh sửa khách hàng</a></li>
 									</ul>
 								</li>
 								<li>
 									<a href="#"><i class="icon-cart2"></i> <span>Quản lý đơn hàng</span></a>
 									<ul>
-                                    <li><a href="{{route('getaddkh')}}">Thêm đơn hàng</a></li>
-										<li><a href="{{route('getdeletekh')}}">Xóa đơn hàng</a></li>
-                                        <li><a href="{{route('getupdatekh')}}">Chỉnh sửa đơn hàng</a></li>
+										<li><a href="{{route('getadddh')}}">Thêm đơn hàng</a></li>
+										<li ><a href="{{route('getdeletedh')}}">Xóa đơn hàng</a></li>
+                                        <li><a href="{{route('getupdatedh')}}">Chỉnh sửa đơn hàng</a></li>
 									</ul>
 								</li>
-                                <li class="active">
-									<a href="{{route('getrole')}}"><i class=" icon-collaboration"></i> <span>Quản lý phân quyền</span></a>
+                                <li>
+									<a href="#"><i class=" icon-collaboration"></i> <span>Quản lý phân quyền</span></a>
+									<ul>
+										<li class="active"><a href="{{route('getlistRole')}}">Quản lý</a></li>
+										<li><a href="{{route('getrole')}}">Phân quyền</a></li>
+									</ul>
+
 								</li>
-                                <li >
+                                <li>
 									<a href="#"><i class=" icon-make-group"></i> <span>Quản lý công ty</span></a>
 									<ul>
-                                        <li><a href="{{route('getaddcty')}}">Thêm công ty</a></li>
+									<li><a href="{{route('getaddcty')}}">Thêm công ty</a></li>
 										<li><a href="{{route('getdeletecty')}}">Xóa công ty</a></li>
                                         <li><a href="{{route('getupdatecty')}}">Chỉnh sửa công ty</a></li>
 									</ul>
@@ -291,7 +297,7 @@
 										<thead>
 											<tr>
 												<th class="col-md-2">Mã tài khoản</th>
-												<th class="col-md-2">Username</th>\
+												<th class="col-md-2">Username</th>
                                                 <th class="col-md-2">Tên</th>
 												<th class="col-md-2"></th>
 
@@ -344,18 +350,36 @@
 
 							</div>   
 
-                            @if($errors->any())
-                            <div class="alert alert-danger">
-                                    @foreach ($errors->all() as $error)
-                                        {{ $error }}
-                                    @endforeach
-                            </div>
-                            @endif
-                            @if(session('success'))
-                                <div class="alert alert-success">
-                                    {{ session('success') }}
-                                </div>
-                            @endif
+							@if (session('error'))
+							<script>
+								var error = {!! json_encode(session('error')) !!};
+								// Sử dụng giá trị error trong script của bạn
+								console.log('Error: ' + error);																
+								$(document).ready(function() {
+									new PNotify({
+										title: error,
+										//text: 'Check me out! I\',
+										addclass: 'bg-danger'
+									});
+								});
+								//{{ session()->pull('error') }};
+							</script>
+							@endif
+							@if (session('success'))
+							<script>
+								var success = {!! json_encode(session('success')) !!};
+								console.log(success);
+								// Sử dụng giá trị error trong script của bạn
+								$(document).ready(function() {
+									new PNotify({
+										title: success,
+										//text: 'Check me out! I\',
+										addclass: 'bg-success'
+									});
+								});
+								//{{ session()->pull('success') }};					
+							</script>
+							@endif
 
                         </div>
 
@@ -372,7 +396,7 @@
 		<div class="modal-dialog" role="document">
 		  <div class="modal-content">
 			<div class="modal-header">
-			  <h5 class="modal-title" id="exampleModalLabel">Bạn có chắc muốn xóa khách hàng</h5>
+			  <h5 class="modal-title" id="exampleModalLabel">Bạn có chắc muốn xóa quyền tài khoản </h5>
 			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 			  </button>

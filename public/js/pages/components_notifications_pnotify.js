@@ -83,6 +83,8 @@ $(function() {
             type: 'error'
         });
     });
+    //
+
 
     // Success notification
     $('#pnotify-success').on('click', function () {
@@ -120,13 +122,21 @@ $(function() {
     //
 
     // Solid primary
-    $('#pnotify-solid-primary').on('click', function () {
-        new PNotify({
-            title: 'Primary notice',
-            text: 'Check me out! I\'m a notice.',
-            addclass: 'bg-primary'
-        });
-    });
+    // $('#pnotify-solid-primary').on('click', function () {
+    //     new PNotify({
+    //         title: 'Primary notice',
+    //         text: 'Check me out! I\'m a notice.',
+    //         addclass: 'bg-primary'
+    //     });
+    // });
+    // $(document).ready(function() {
+    //     new PNotify({
+    //         title: 'Primary notice',
+    //         text: 'Check me out! I\'m a notice.',
+    //         addclass: 'bg-primary'
+    //     });
+    // });
+    
 
     // Solid danger
     $('#pnotify-solid-danger').on('click', function () {

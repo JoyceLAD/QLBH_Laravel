@@ -80,10 +80,10 @@
 						<div class="panel panel-body login-form">
 							<div class="text-center">
 								<div class="icon-object border-success text-success"><i class="icon-plus3"></i></div>
-								<h5 class="content-group">Create account <small class="display-block">All fields are required</small></h5>
+								<h5 class="content-group">Đăng ký tài khoản <small class="display-block">Các trường không được để trống</small></h5>
 							</div>
 
-							<div class="content-divider text-muted form-group"><span>Your credentials</span></div>
+							<div class="content-divider text-muted form-group"><span>Thông tin của bạn</span></div>
                             <form action="{{ route('register') }}" method="POST">
 							@csrf
                                 <div class="form-group has-feedback has-feedback-left">
@@ -116,8 +116,12 @@
 									@endif
                                 </div>
                                 
-                                <button type="submit" class="btn bg-teal btn-block btn-lg">Register <i class="icon-circle-right2 position-right"></i></button>
+                                <button type="submit" class="btn bg-teal btn-block btn-lg">Đăng ký <i class="icon-circle-right2 position-right"></i></button>
                             </form>
+							<div class="content-divider text-muted form-group"><span>Đã có tài khoản</span></div>
+							<a href="{{route('getlogin')}}"><button type="submit" id="button-submit" class="btn btn-primary btn-block" style="background-color:#808080 ">Đăng nhập <i class="icon-circle-right2 position-right"></i></button>
+							</a>
+
 						</div>
 				</div>
 

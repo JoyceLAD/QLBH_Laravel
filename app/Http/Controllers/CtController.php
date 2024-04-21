@@ -34,7 +34,7 @@ class CtController extends Controller
             return redirect()->route('getaddcty')->withSuccess('Thêm công ty thành công với mã công ty là: '.$result->id_ct);
 
         }else {
-            return redirect()->route('getaddcty')->withErrors('Thêm công ty không thành công');
+            return redirect()->route('getaddcty')->with('error','Thêm công ty không thành công');
         }
     }
     public function getdeletecty()
@@ -42,7 +42,7 @@ class CtController extends Controller
         if (Session::has('userId')) {
             return view('deletecty');
         }
-        return redirect("login")->withErrors('Bạn cần đăng nhập trước');
+        return redirect("login")->with('error','Bạn cần đăng nhập trước');
     }
 
     public  function postdeletecty(Request $request)
@@ -56,7 +56,7 @@ class CtController extends Controller
             $company->delete();
             return redirect()->route('getdeletecty')->withSuccess('Xóa công ty thành công');
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('getdeletecty')->withErrors('Công ty không tồn tại');
+            return redirect()->route('getdeletecty')->with('error','Công ty không tồn tại');
         }        
     }
     public function getupdatecty()
@@ -81,7 +81,7 @@ class CtController extends Controller
             $company->update($request->all());
             return redirect()->route('getupdatecty')->withSuccess('Chỉnh sửa công ty thành công');
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('getupdatecty')->withErrors('Công ty không tồn tại');
+            return redirect()->route('getupdatecty')->with('error','Công ty không tồn tại');
         }        
     }
 

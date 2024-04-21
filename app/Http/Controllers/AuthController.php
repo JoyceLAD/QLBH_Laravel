@@ -27,12 +27,16 @@ class AuthController extends Controller
             'ten' => 'required',
 
         ],[
+            'username.required' => 'Thiếu tài khoản',
+            'password.required' => 'Thiếu mật khẩu',
+            'ten.required' => 'Thiếu tên',
+
             'username.unique' => 'Tồn tại tài khoản',
             'password.min' => 'Mật khẩu cần ít nhất 6 ký tự',
         ]);
         $data = $request ->all();
         $check = $this ->create($data);
-        return redirect("login");
+        return redirect("login")->withSuccess('Đăng ký thành công');
     }
 
     public function create(array $data)
@@ -47,12 +51,15 @@ class AuthController extends Controller
         $request -> validate([
             'username' => 'required',
             'password' => 'required',
+        ],[
+            'username.required' => 'Thiếu tài khoản',
+            'password.required' => 'Thiếu mật khẩu',
         ]);
         $credentials = $request ->only('username', 'password');
         $userId = Account::attempt($credentials);
         if($userId){
             Session::put('userId',$userId );        
-            return redirect()->route('dasboard');
+            return redirect()->route('dasboard')->withSuccess('Đăng nhập thành công');
         }else
         {
             return redirect()->route('login')->withError('Tên đăng nhập hoặc mật khẩu không đúng');
@@ -62,7 +69,7 @@ class AuthController extends Controller
     {
         Session::flush();
         Auth::logout();
-        return Redirect('login');
+        return Redirect('login')->withSuccess('Đăng xuất thành công');
     }
     public function welcome()
     {

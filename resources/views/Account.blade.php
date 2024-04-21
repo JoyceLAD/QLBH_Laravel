@@ -32,11 +32,12 @@
     <script type="text/javascript" src="{{ asset('js/plugins/ui/moment/moment.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/plugins/pickers/daterangepicker.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/core/app.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/pages/dashboard.js') }}"></script>
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <script type="text/javascript" src="{{ asset('js/pages/components_modals.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('js/plugins/notifications/bootbox.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/plugins/notifications/sweet_alert.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/plugins/notifications/pnotify.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/pages/components_notifications_pnotify.js') }}"></script>
 
 
     <!-- /theme JS files -->
@@ -226,7 +227,12 @@
 									</ul>
 								</li>
                                 <li>
-									<a href="{{route('getrole')}}"><i class=" icon-collaboration"></i> <span>Quản lý phân quyền</span></a>
+									<a href="#"><i class=" icon-collaboration"></i> <span>Quản lý phân quyền</span></a>
+									<ul>
+										<li><a href="{{route('getlistRole')}}">Quản lý</a></li>
+										<li><a href="{{route('getrole')}}">Phân quyền</a></li>
+									</ul>
+
 								</li>
                                 <li>
 									<a href="#"><i class=" icon-make-group"></i> <span>Quản lý công ty</span></a>
@@ -273,6 +279,10 @@
 											<label class="col-lg-3 control-label">Mật khẩu muốn sửa:</label>
                                             <div class="col-lg-9">
 												<input type="text" class="form-control" placeholder="" name="password">
+												@if ($errors->has('password'))
+												<span class="text-danger">{{ $errors->first('password') }}</span>
+												@endif		
+	
 											</div>
 										</div>
                                         <div class="form-group">
@@ -291,19 +301,37 @@
 								</div>
 							</form>
 							<!-- /basic layout -->
-                            @if($errors->any())
-                            <div class="alert alert-danger">
-                                    @foreach ($errors->all() as $error)
-                                        {{ $error }}
-                                    @endforeach
-                            </div>
-                            @endif
-                            @if(session('success'))
-                                <div class="alert alert-success">
-                                    {{ session('success') }}
-                                </div>
-                            @endif
-
+							@if (session('error'))
+							<script>
+								var error = {!! json_encode(session('error')) !!};
+								// Sử dụng giá trị error trong script của bạn
+								console.log('Error: ' + error);																
+								$(document).ready(function() {
+									new PNotify({
+										title: error,
+										//text: 'Check me out! I\',
+										addclass: 'bg-danger'
+									});
+								});
+								//{{ session()->pull('error') }};
+							</script>
+							@endif
+							@if (session('success'))
+							<script>
+								var success = {!! json_encode(session('success')) !!};
+								console.log(success);
+								// Sử dụng giá trị error trong script của bạn
+								$(document).ready(function() {
+									new PNotify({
+										title: success,
+										//text: 'Check me out! I\',
+										addclass: 'bg-success'
+									});
+								});
+								//{{ session()->pull('success') }};					
+							</script>
+							@endif
+		
                         </div>
 
             </div>

@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\NotifyController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CtController;
 use App\Http\Controllers\HomeController;
@@ -8,6 +8,7 @@ use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DhController;
 use App\Http\Controllers\SearchController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -23,9 +24,9 @@ use App\Http\Controllers\SearchController;
 //     return view('welcome');
 // })->name('dasboard');
 
-Route::get('login', [AuthController::class, 'index']);
+Route::get('login', [AuthController::class, 'index'])->name('getlogin');
 Route::post('login', [AuthController::class, 'login'])->name('login');
-Route::get('register', [AuthController::class, 'registration']);
+Route::get('register', [AuthController::class, 'registration'])->name('getregister');
 Route::post('register', [AuthController::class, 'register'])->name('register');
 Route::get('signout', [AuthController::class, 'signOut'])->name('signout');
 Route::get('', [AuthController::class, 'welcome'])->name('dasboard');
@@ -91,5 +92,9 @@ Route::get('exportkh', [HomeController::class, 'exportkh'])->name('exportkh');
 //Import
 Route::post('importdh', [HomeController::class, 'importdh'])->name('importdh');
 Route::post('importkh', [HomeController::class, 'importkh'])->name('importkh');
-
+//detail customer
 Route::get('/detailkh/{id}',[KhController::class,'detailkh'])->name('detailkh1');
+//Notify
+Route::get('/errornotify',[NotifyController::class,'getErrorSession'] )->name('errornotify');
+
+

@@ -21,11 +21,8 @@
     <script type="text/javascript" src="{{ asset('js/core/libraries/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/core/libraries/bootstrap.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/plugins/loaders/blockui.min.js') }}"></script>
-    <script type="text/javascript" src="assets/js/plugins/notifications/pnotify.min.js"></script>
 
 
-    <script type="text/javascript" src="{{ asset('js/plugins/notifications/pnotify.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/pages/components_notifications_pnotify.js') }}"></script>
 
     <!-- /core JS files -->
 
@@ -38,8 +35,10 @@
     <script type="text/javascript" src="{{ asset('js/plugins/ui/moment/moment.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/plugins/pickers/daterangepicker.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/core/app.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/pages/dashboard.js') }}"></script>
     <!-- /theme JS files -->
+	<script type="text/javascript" src="{{ asset('js/plugins/notifications/pnotify.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/pages/components_notifications_pnotify.js') }}"></script>
+
 </head>
 
 <body>
@@ -223,11 +222,11 @@
 							<ul class="navigation navigation-main navigation-accordion">
 
 								<!-- Main -->
-								<li ><a href="#"><i class="icon-home4"></i> <span>Dashboard</span></a></li>
-								<li >
+								<li ><a href="{{route('dasboard')}}"><i class="icon-home4"></i> <span>Dashboard</span></a></li>
+								<li>
 									<a href="#"><i class="icon-people"></i> <span>Quản lý khách hàng</span></a>
 									<ul>
-                                        <li class="active"><a href="{{route('getaddkh')}}">Thêm khách hàng</a></li>
+										<li class="active"><a href="{{route('getaddkh')}}">Thêm khách hàng</a></li>
 										<li><a href="{{route('getdeletekh')}}">Xóa khách hàng</a></li>
                                         <li><a href="{{route('getupdatekh')}}">Chỉnh sửa khách hàng</a></li>
 									</ul>
@@ -235,18 +234,23 @@
 								<li>
 									<a href="#"><i class="icon-cart2"></i> <span>Quản lý đơn hàng</span></a>
 									<ul>
-                                        <li><a href="{{route('getadddh')}}">Thêm đơn hàng</a></li>
+										<li><a href="{{route('getadddh')}}">Thêm đơn hàng</a></li>
 										<li><a href="{{route('getdeletedh')}}">Xóa đơn hàng</a></li>
                                         <li><a href="{{route('getupdatedh')}}">Chỉnh sửa đơn hàng</a></li>
 									</ul>
 								</li>
-                                <li >
-									<a href="{{route('getrole')}}"><i class=" icon-collaboration"></i> <span>Quản lý phân quyền</span></a>
+                                <li>
+									<a href="#"><i class=" icon-collaboration"></i> <span>Quản lý phân quyền</span></a>
+									<ul>
+										<li><a href="{{route('getlistRole')}}">Quản lý</a></li>
+										<li><a href="{{route('getrole')}}">Phân quyền</a></li>
+									</ul>
+
 								</li>
-                                <li >
+                                <li>
 									<a href="#"><i class=" icon-make-group"></i> <span>Quản lý công ty</span></a>
 									<ul>
-                                        <li><a href="{{route('getaddcty')}}">Thêm công ty</a></li>
+									<li><a href="{{route('getaddcty')}}">Thêm công ty</a></li>
 										<li><a href="{{route('getdeletecty')}}">Xóa công ty</a></li>
                                         <li><a href="{{route('getupdatecty')}}">Chỉnh sửa công ty</a></li>
 									</ul>
@@ -266,6 +270,37 @@
 			<!-- Main content -->
 			<div class="content-wrapper">
             <div class="content">
+				@if (session('error'))
+				<script>
+					var error = {!! json_encode(session('error')) !!};
+					// Sử dụng giá trị error trong script của bạn
+					console.log('Error: ' + error);																
+					$(document).ready(function() {
+						new PNotify({
+							title: error,
+							//text: 'Check me out! I\',
+							addclass: 'bg-danger'
+						});
+					});
+					//{{ session()->pull('error') }};
+				</script>
+				@endif
+				@if (session('success'))
+				<script>
+					var success = {!! json_encode(session('success')) !!};
+					console.log(success);
+					// Sử dụng giá trị error trong script của bạn
+					$(document).ready(function() {
+						new PNotify({
+							title: success,
+							//text: 'Check me out! I\',
+							addclass: 'bg-success'
+						});
+					});
+					//{{ session()->pull('success') }};					
+				</script>
+				@endif
+
             <div class="row">
 						<div class="col-md-6">
 
@@ -289,30 +324,50 @@
 											<label class="col-lg-3 control-label">Tên khách hàng:</label>
                                             <div class="col-lg-9">
 												<input type="text" class="form-control" placeholder="" name="ten">
+												@if ($errors->has('ten'))
+												<span class="text-danger">{{ $errors->first('ten') }}</span>
+												@endif
+			
 											</div>
 										</div>
                                         <div class="form-group">
 											<label class="col-lg-3 control-label">Tuổi:</label>
                                             <div class="col-lg-9">
 												<input type="text" class="form-control" placeholder="" name="tuoi">
+												@if ($errors->has('tuoi'))
+												<span class="text-danger">{{ $errors->first('tuoi') }}</span>
+												@endif
+			
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="col-lg-3 control-label">Địa chỉ:</label>
                                             <div class="col-lg-9">
 												<input type="text" class="form-control" placeholder="" name="dia_chi">
+												@if ($errors->has('dia_chi'))
+												<span class="text-danger">{{ $errors->first('dia_chi') }}</span>
+												@endif
+			
 											</div>
 										</div>
                                         <div class="form-group">
 											<label class="col-lg-3 control-label">Mã công ty:</label>
                                             <div class="col-lg-9">
 												<input type="text" class="form-control" placeholder="" name="id_ct">
+												@if ($errors->has('id_ct'))
+												<span class="text-danger">{{ $errors->first('id_ct') }}</span>
+												@endif
+			
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="col-lg-3 control-label">Nghề nghiệp:</label>
                                             <div class="col-lg-9">
 												<input type="text" class="form-control" placeholder="" name="nghe_nghiep">
+												@if ($errors->has('nghe_nghiep'))
+												<span class="text-danger">{{ $errors->first('nghe_nghiep') }}</span>
+												@endif
+			
 											</div>
 										</div>
 
@@ -326,19 +381,6 @@
 								</div>
 							</form>
 							<!-- /basic layout -->
-                            @if($errors->any())
-                            <div class="alert alert-danger">
-                                    @foreach ($errors->all() as $error)
-                                        {{ $error }}
-                                    @endforeach
-                            </div>
-                            @endif
-                            @if(session('success'))
-                                <div class="alert alert-success">
-                                    {{ session('success') }}
-                                </div>
-                            @endif
-
                         </div>
 
             </div>
@@ -349,7 +391,5 @@
 		<!-- /page content -->
 
 	</div>
-	<!-- /page container -->
-    <!-- <a href="{{ route('signout') }}">Đăng xuất</a> -->
 </body>
 </html>

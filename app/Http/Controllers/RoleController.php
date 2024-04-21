@@ -22,10 +22,10 @@ class RoleController extends Controller
                 return view('role');
             }
             else{
-                return redirect("/")->withErrors('Bạn đã là nhân viên ');
+                return redirect("/")->with('error','Bạn đã là nhân viên ');
             }
         }
-        return redirect("login")->withErrors('Bạn cần đăng nhập trước');
+        return redirect("login")->with('error','Bạn cần đăng nhập trước');
     }
 
     public function postrole(Request $request)
@@ -39,26 +39,26 @@ class RoleController extends Controller
         $checkown = Phanquyen::check_roleforown($data);
         $check_dh = Donhang::check_dh(($data));
         if ($check == 1) {
-            return redirect("role")->withErrors('Lỗi do tài khoản đã được thêm quyền');
+            return redirect("role")->with('error','Lỗi do tài khoản đã được thêm quyền');
         } else {
             if($checkown == 1)
             {
-                return redirect("role")->withErrors('Lỗi do tài khoản này đang làm chủ');
+                return redirect("role")->with('error','Lỗi do tài khoản này đang làm chủ');
             }else{
                 if($check_dh == 1)
                 {
-                    return redirect("role")->withErrors('Lỗi do tài khoản này đang có đơn hàng, chỉ có thể phân quyền cho tài khoản không có đơn hàng');
+                    return redirect("role")->with('error','Lỗi do tài khoản này đang có đơn hàng, chỉ có thể phân quyền cho tài khoản không có đơn hàng');
                 }else
                 {
                     $id_tk2 = Account::getId($data);
                     if ($id_tk2 === null) { 
-                        return redirect("role")->withErrors('Tài khoản không tồn tại');
+                        return redirect("role")->with('error','Tài khoản không tồn tại');
                     } else {
                         $request = Phanquyen::addrole($userid, $id_tk2);
                         if ($request) {
                             return redirect("role")->withSuccess('Thêm quyền thành công');
                         } else {
-                            return redirect("role")->withErrors('Thêm quyền thất bại');
+                            return redirect("role")->with('error','Thêm quyền thất bại');
                         }
                     }
         
@@ -76,13 +76,13 @@ class RoleController extends Controller
         $id = Session::get('userId')->id_tk;
         if($id == null)
         {
-            return redirect("login")->withErrors('Bạn cần đăng nhập trước');
+            return redirect("login")->with('error','Bạn cần đăng nhập trước');
         }else if($role =="Nhân viên")
         {
-            return redirect()->route('list')->withErrors('Tài khoản hiện đã được phân quyền bởi tài khoản khác');
+            return redirect()->route('list')->with('error','Tài khoản hiện đã được phân quyền bởi tài khoản khác');
         }else if($role == "Trắng")
         {
-            return redirect()->route('list')->withSuccess('Bạn chưa phân quyền cho tài khoản nào');
+            return redirect()->route('list')->with('error','Bạn chưa phân quyền cho tài khoản nào');
         }else if($role == "Chủ")
         {
             return redirect()->route('list');
@@ -111,10 +111,10 @@ class RoleController extends Controller
                 $pq->delete();
                 return redirect()->route('list')->withSuccess('Xóa quyền thành công');
             } else {
-                return redirect()->route('list')->withErrors('Mã phân quyền không tồn tại');
+                return redirect()->route('list')->with('error','Mã phân quyền không tồn tại');
             }
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('list')->withErrors('Mã phân quyền không tồn tại');
+            return redirect()->route('list')->with('error','Mã phân quyền không tồn tại');
         }
     }
     public function deleterole2(Request $request)
@@ -135,10 +135,10 @@ class RoleController extends Controller
                 $pq->delete();
                 return redirect()->route('list')->withSuccess('Xóa quyền thành công');
             } else {
-                return redirect()->route('list')->withErrors('Mã phân quyền không tồn tại');
+                return redirect()->route('list')->with('error','Mã phân quyền không tồn tại');
             }
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('list')->withErrors('Mã phân quyền không tồn tại');
+            return redirect()->route('list')->with('error','Mã phân quyền không tồn tại');
         }
     }
 

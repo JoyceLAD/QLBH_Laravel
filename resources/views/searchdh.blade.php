@@ -113,32 +113,35 @@
 							<ul class="navigation navigation-main navigation-accordion">
 
 								<!-- Main -->
-								<li ><a href="#"><i class="icon-home4"></i> <span>Dashboard</span></a></li>
+								<li ><a href="{{route('dasboard')}}"><i class="icon-home4"></i> <span>Dashboard</span></a></li>
 								<li>
 									<a href="#"><i class="icon-people"></i> <span>Quản lý khách hàng</span></a>
 									<ul>
-                                        <li ><a href="{{route('getsearchkh')}}">Tìm kiếm khách hàng</a></li>
-										<li><a href="{{route('getaddkh')}}">Thêm khách hàng</a></li>
-										<li><a href="{{route('getdeletekh')}}">Xóa khách hàng</a></li>
-                                        <li><a href="{{route('getupdatedh')}}">Chỉnh sửa khách hàng</a></li>
+										<li ><a href="{{route('getaddkh')}}">Thêm khách hàng</a></li>
+										<li ><a href="{{route('getdeletekh')}}">Xóa khách hàng</a></li>
+                                        <li ><a href="{{route('getupdatekh')}}">Chỉnh sửa khách hàng</a></li>
 									</ul>
 								</li>
 								<li>
-									<a href=""><i class="icon-cart2"></i> <span>Quản lý đơn hàng</span></a>
+									<a href="#"><i class="icon-cart2"></i> <span>Quản lý đơn hàng</span></a>
 									<ul>
-                                        <li class="active" ><a href="{{route('getsearchdh')}}">Tìm kiếm đơn hàng</a></li>
-                                    <li ><a href="{{route('getadddh')}}">Thêm đơn hàng</a></li>
+										<li><a href="{{route('getadddh')}}">Thêm đơn hàng</a></li>
 										<li><a href="{{route('getdeletedh')}}">Xóa đơn hàng</a></li>
                                         <li><a href="{{route('getupdatedh')}}">Chỉnh sửa đơn hàng</a></li>
 									</ul>
 								</li>
-                                <li >
-									<a href="{{route('getrole')}}"><i class=" icon-collaboration"></i> <span>Quản lý phân quyền</span></a>
+                                <li>
+									<a href="#"><i class=" icon-collaboration"></i> <span>Quản lý phân quyền</span></a>
+									<ul>
+										<li><a href="{{route('getlistRole')}}">Quản lý</a></li>
+										<li><a href="{{route('getrole')}}">Phân quyền</a></li>
+									</ul>
+
 								</li>
-                                <li >
+                                <li>
 									<a href="#"><i class=" icon-make-group"></i> <span>Quản lý công ty</span></a>
 									<ul>
-                                        <li><a href="{{route('getaddcty')}}">Thêm công ty</a></li>
+									<li><a href="{{route('getaddcty')}}">Thêm công ty</a></li>
 										<li><a href="{{route('getdeletecty')}}">Xóa công ty</a></li>
                                         <li><a href="{{route('getupdatecty')}}">Chỉnh sửa công ty</a></li>
 									</ul>

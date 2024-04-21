@@ -120,10 +120,10 @@ class DhController extends Controller
                 return redirect()->route('getadddh')->withSuccess('Thêm đơn thành công với mã đơn hàng là: '.$result->id_dh);
     
             }else {
-                return redirect()->route('getadddh')->withErrors('Thêm đơn hàng không thành công');
+                return redirect()->route('getadddh')->with('error','Thêm đơn hàng không thành công');
             }
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('getadddh')->withErrors('Khách hàng không tồn tại');
+            return redirect()->route('getadddh')->with('error','Khách hàng không tồn tại');
         }        
 
     }
@@ -154,10 +154,10 @@ class DhController extends Controller
                 $dh->delete();
                 return redirect()->route('getdeletedh')->withSuccess('Xóa đơn hàng thành công');
             } else {
-                return redirect()->route('getdeletedh')->withErrors('Đơn hàng không tồn tại');
+                return redirect()->route('getdeletedh')->with('error','Đơn hàng không tồn tại');
             }
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('getdeletedh')->withErrors('Đơn hàng không tồn tại');
+            return redirect()->route('getdeletedh')->with('error','Đơn hàng không tồn tại');
         }
     }
     public  function postupdatedh(Request $request)
@@ -194,15 +194,15 @@ class DhController extends Controller
                     return redirect()->route('getupdatedh')->withSuccess('Chỉnh sửa đơn hàng thành công');
         
                 }catch (ModelNotFoundException $e) {
-                    return redirect()->route('getupdatedh')->withErrors('Khách hàng không tồn tại');
+                    return redirect()->route('getupdatedh')->with('error','Khách hàng không tồn tại');
                 }  
                 }else
             {
-                return redirect()->route('getdeletedh')->withErrors('Đơn hàng không tồn tại');
+                return redirect()->route('getupdatedh')->with('error','Đơn hàng không tồn tại');
             }
 
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('getupdatedh')->withErrors('Đơn hàng không tồn tại');
+            return redirect()->route('getupdatedh')->with('error','Đơn hàng không tồn tại');
         }        
     }
     public  function postupdatedh_home(Request $request)
@@ -239,15 +239,15 @@ class DhController extends Controller
                     return redirect()->route('dasboard')->withSuccess('Chỉnh sửa đơn hàng thành công');
         
                 }catch (ModelNotFoundException $e) {
-                    return redirect()->route('dasboard')->withErrors('Khách hàng không tồn tại');
+                    return redirect()->route('dasboard')->with('error','Khách hàng không tồn tại');
                 }  
                 }else
             {
-                return redirect()->route('dasboard')->withErrors('Đơn hàng không tồn tại');
+                return redirect()->route('dasboard')->with('error','Đơn hàng không tồn tại');
             }
 
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('dasboard')->withErrors('Đơn hàng không tồn tại');
+            return redirect()->route('dasboard')->with('error','Đơn hàng không tồn tại');
         }        
     }
     public function postdeletedh_home(Request $request)
@@ -277,10 +277,10 @@ class DhController extends Controller
                 $dh->delete();
                 return redirect()->route('dasboard')->withSuccess('Xóa đơn hàng thành công');
             } else {
-                return redirect()->route('dasboard')->withErrors('Đơn hàng không tồn tại');
+                return redirect()->route('dasboard')->with('error','Đơn hàng không tồn tại');
             }
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('dasboard')->withErrors('Đơn hàng không tồn tại');
+            return redirect()->route('dasboard')->with('error','Đơn hàng không tồn tại');
         }
     }
 

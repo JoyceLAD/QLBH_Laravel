@@ -19,6 +19,11 @@
 	<script type="text/javascript" src="{{ asset('js/core/libraries/jquery.min.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('js/core/libraries/bootstrap.min.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('js/plugins/loaders/blockui.min.js') }}"></script>
+	
+	<script type="text/javascript" src="{{ asset('js/plugins/notifications/pnotify.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/pages/components_notifications_pnotify.js') }}"></script>
+
+	
 	<!-- /core JS files -->
 
 	<!-- Theme JS files -->
@@ -80,10 +85,10 @@
 						<div class="panel panel-body login-form">
                             <div class="text-center">
 								<div class="icon-object border-slate-300 text-slate-300"><i class="icon-reading"></i></div>
-								<h5 class="content-group">Login to your account <small class="display-block">Enter your credentials below</small></h5>
+								<h5 class="content-group">Đăng nhập vào tài khoản của bạn <small class="display-block">Nhập các thông tin dưới đây</small></h5>
 							</div>
 
-							<div class="content-divider text-muted form-group"><span>Your credentials</span></div>
+							<div class="content-divider text-muted form-group"><span>Thông tin của bạn</span></div>
                             <form action="{{ route('login') }}" method="POST">
                             @csrf
                                 <div class="form-group has-feedback has-feedback-left">
@@ -92,9 +97,8 @@
                                         <i class="icon-user-check text-muted"></i>
                                     </div>
 									@if ($errors->has('username'))
-									<span class="text-danger">{{ $errors->first('username') }}</span>
+									<span class="text-danger">Thiếu username</span>
 									@endif
-                                    <!-- <span class="help-block text-danger"><i class="icon-cancel-circle2 position-left"></i> This username is already taken</span> -->
                                 </div>
                                 <div class="form-group has-feedback has-feedback-left">
                                     <input type="text" class="form-control" placeholder="Password" name="password">
@@ -102,40 +106,53 @@
                                         <i class="icon-user-lock text-muted"></i>
                                     </div>
 									@if ($errors->has('password'))
-									<span class="text-danger">{{ $errors->first('password') }}</span>
+									<span class="text-danger">Thiếu mật khẩu</span>
 									@endif
                                 </div>
                                                                 
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-primary btn-block">Sign in <i class="icon-circle-right2 position-right"></i></button>
+                                    <button type="submit" id="button-submit" class="btn btn-primary btn-block">Đăng nhập <i class="icon-circle-right2 position-right"></i></button>
                                 </div>
+								{{-- <div>
+									<td>Primary notice</td>
+									<td><button type="button" class="btn btn-primary btn-sm" id="pnotify-solid-primary">Launch <i class="icon-play3 position-right"></i></button></td>
+									<td>Primary notice. To use, add <code>.bg-primary</code> color class to the plugin configuration options</td>
+
+								</div> --}}
                             </form>
-							<!-- @if (session('success'))
-							<div class="alert alert-success no-border">
-								<button type="button" class="close" data-dismiss="alert"><span>&times;</span><span class="sr-only">Close</span></button>
-								<span class="text-semibold">Đăng ký thành công</span> {{ session('success') }}
-							</div>
-							@endif -->
-
+							<div class="content-divider text-muted form-group"><span>Chưa có tài khoản</span></div>
+							<a href="{{route('getregister')}}"><button type="submit" id="button-submit" class="btn btn-primary btn-block" style="background-color:#808080 ">Đăng ký <i class="icon-circle-right2 position-right"></i></button>
+							</a>
 							@if (session('error'))
-								<div class="alert alert-danger no-border">
-									<button type="button" class="close" data-dismiss="alert"><span>&times;</span><span class="sr-only">Close</span></button>
-									<span class="text-semibold">Đăng nhập không thành công</span> {{ session('error') }}
-								</div>
+							<script>
+								var error = {!! json_encode(session('error')) !!};
+								// Sử dụng giá trị error trong script của bạn
+								console.log('Error: ' + error);																
+								$(document).ready(function() {
+									new PNotify({
+										title: error,
+										//text: 'Check me out! I\',
+										addclass: 'bg-danger'
+									});
+								});
+
+							</script>
+							@endif
+							@if (session('success'))
+							<script>
+								var success = {!! json_encode(session('success')) !!};
+								// Sử dụng giá trị error trong script của bạn
+								$(document).ready(function() {
+									new PNotify({
+										title: success,
+										//text: 'Check me out! I\',
+										addclass: 'bg-success'
+									});
+								});
+							</script>
 							@endif
 
-							@if ($errors->any())
-								<div class="alert alert-danger no-border">
-									<button type="button" class="close" data-dismiss="alert"><span>&times;</span><span class="sr-only">Close</span></button>
-									<span class="text-semibold">Đăng nhập không thành công</span>
-									<ul>
-										@foreach ($errors->all() as $error)
-											<li>{{ $error }}</li>
-										@endforeach
-									</ul>
-								</div>
-							@endif
-
+																								
 						</div>
 				</div>
 
@@ -144,7 +161,6 @@
 		</div>
 
 	</div>
-
-</body>
+	</body>
 
 </html>

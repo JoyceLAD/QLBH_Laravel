@@ -32,11 +32,11 @@
     <script type="text/javascript" src="{{ asset('js/plugins/ui/moment/moment.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/plugins/pickers/daterangepicker.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/core/app.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/pages/dashboard.js') }}"></script>
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <script type="text/javascript" src="{{ asset('js/pages/components_modals.js') }}"></script>
-	<script type="text/javascript" src="{{ asset('js/plugins/notifications/bootbox.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/plugins/notifications/sweet_alert.min.js') }}"></script>
+
+	<script type="text/javascript" src="{{ asset('js/plugins/notifications/pnotify.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/pages/components_notifications_pnotify.js') }}"></script>
 
 
     <!-- /theme JS files -->
@@ -207,13 +207,13 @@
 							<ul class="navigation navigation-main navigation-accordion">
 
 								<!-- Main -->
-								<li class="active"><a href="#"><i class="icon-home4"></i> <span>Dashboard</span></a></li>
+								<li class="active"><a href="{{route('dasboard')}}"><i class="icon-home4"></i> <span>Dashboard</span></a></li>
 								<li>
 									<a href="#"><i class="icon-people"></i> <span>Quản lý khách hàng</span></a>
 									<ul>
-										<li><a href="{{route('getaddkh')}}">Thêm khách hàng</a></li>
-										<li><a href="{{route('getdeletekh')}}">Xóa khách hàng</a></li>
-                                        <li><a href="{{route('getupdatekh')}}">Chỉnh sửa khách hàng</a></li>
+										<li ><a href="{{route('getaddkh')}}">Thêm khách hàng</a></li>
+										<li ><a href="{{route('getdeletekh')}}">Xóa khách hàng</a></li>
+                                        <li ><a href="{{route('getupdatekh')}}">Chỉnh sửa khách hàng</a></li>
 									</ul>
 								</li>
 								<li>
@@ -225,7 +225,12 @@
 									</ul>
 								</li>
                                 <li>
-									<a href="{{route('getrole')}}"><i class=" icon-collaboration"></i> <span>Quản lý phân quyền</span></a>
+									<a href="#"><i class=" icon-collaboration"></i> <span>Quản lý phân quyền</span></a>
+									<ul>
+										<li><a href="{{route('getlistRole')}}">Quản lý</a></li>
+										<li><a href="{{route('getrole')}}">Phân quyền</a></li>
+									</ul>
+
 								</li>
                                 <li>
 									<a href="#"><i class=" icon-make-group"></i> <span>Quản lý công ty</span></a>
@@ -274,7 +279,7 @@
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 									<i class="icon-gear position-left"></i>
-									Nhập/Xuất
+									Nhập/Xuất/Search
 									<span class="caret"></span>
 								</a>
 
@@ -283,6 +288,8 @@
 									<li><a href="{{route('exportkh')}}"><i class="icon-database-export"></i> Xuất khách hàng</a></li>
 									<li><a  data-toggle="modal" data-target="#exampleModal7"><i class="icon-import"></i> Nhập đơn hàng</a></li>
 									<li><a  data-toggle="modal" data-target="#exampleModal8"><i class="icon-import"></i> Nhập khách hàng</a></li>
+									<li><a href="{{route('getsearchdh')}}"><i class="icon-search4"></i> Tìm kiếm đơn hàng</a></li>
+									<li><a href="{{route('getsearchkh')}}"><i class="icon-search4"></i> Tìm kiếm khách hàng</a></li>
 
 
 								</ul>
@@ -292,6 +299,36 @@
 				</div>
 
                 <div class="content">
+					@if (session('error'))
+					<script>
+						var error = {!! json_encode(session('error')) !!};
+						// Sử dụng giá trị error trong script của bạn
+						console.log('Error: ' + error);																
+						$(document).ready(function() {
+							new PNotify({
+								title: error,
+								//text: 'Check me out! I\',
+								addclass: 'bg-danger'
+							});
+						});
+						//{{ session()->pull('error') }};
+					</script>
+					@endif
+					@if (session('success'))
+					<script>
+						var success = {!! json_encode(session('success')) !!};
+						console.log(success);
+						// Sử dụng giá trị error trong script của bạn
+						$(document).ready(function() {
+							new PNotify({
+								title: success,
+								//text: 'Check me out! I\',
+								addclass: 'bg-success'
+							});
+						});
+						//{{ session()->pull('success') }};					
+					</script>
+					@endif
                     <div class="row">
                         <div class="col-lg-4">
 
@@ -441,7 +478,7 @@
 							<!-- Marketing campaigns -->
 							<div class="panel panel-flat">
 								<div class="panel-heading">
-									<h3 class="panel-title">Danh sách đơn hàng mới nhất</h6>
+									<h3 class="panel-title">Danh sách khách hàng mới nhất</h6>
 									<div class="heading-elements">
 										<span class="label bg-success heading-text">28 active</span>
 										<ul class="icons-list">
@@ -723,5 +760,7 @@
 		</div>
 	  </div>
 	  {{-- <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus-circle" aria-hidden="true"></i> Thêm</button> --}}
+
+
 </body>
 </html>

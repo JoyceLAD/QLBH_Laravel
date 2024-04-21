@@ -63,7 +63,9 @@ class Donhang extends Model
     }
     // Lấy danh sách đơn hàng của chủ
     public static function get_dsdh($id){
-        $dsdh = Donhang::where('id_tk', $id)->get();
+        $dsdh = Donhang::where('id_tk', $id)
+        ->take(10)
+        ->get();
         return $dsdh;
     }
 
@@ -72,7 +74,8 @@ class Donhang extends Model
         $result = Phanquyen::where('id_tk2', $id)->first();
         if ($result!==null) {
             $id_chu = $result->id_tk1;
-            $dsdh1 = Donhang::get_dsdh($id_chu);
+            $dsdh1 = Donhang::get_dsdh($id_chu)
+            ;
             return $dsdh1;
         } else {
             return null;
@@ -86,6 +89,7 @@ class Donhang extends Model
                         ->where('donhang.id_tk', $id)
                         ->select('khachhang.id_kh', 'khachhang.ten', 'khachhang.tuoi', 'khachhang.dia_chi', 'congty.ten_congty')                        
                         ->distinct('khachhang.id_kh')
+                        ->take(10)
                         ->get();
         return $results;
     }

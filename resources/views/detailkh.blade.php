@@ -228,26 +228,31 @@
 								<li>
 									<a href="#"><i class="icon-people"></i> <span>Quản lý khách hàng</span></a>
 									<ul>
-                                    <li><a href="{{route('getaddkh')}}">Thêm khách hàng</a></li>
-										<li ><a href="{{route('getdeletekh')}}">Xóa khách hàng</a></li>
+										<li><a href="{{route('getaddkh')}}">Thêm khách hàng</a></li>
+										<li><a href="{{route('getdeletekh')}}">Xóa khách hàng</a></li>
                                         <li><a href="{{route('getupdatekh')}}">Chỉnh sửa khách hàng</a></li>
 									</ul>
 								</li>
 								<li>
 									<a href="#"><i class="icon-cart2"></i> <span>Quản lý đơn hàng</span></a>
 									<ul>
-                                    <li><a href="{{route('getaddkh')}}">Thêm đơn hàng</a></li>
-										<li><a href="{{route('getdeletekh')}}">Xóa đơn hàng</a></li>
-                                        <li><a href="{{route('getupdatekh')}}">Chỉnh sửa đơn hàng</a></li>
+										<li><a href="{{route('getadddh')}}">Thêm đơn hàng</a></li>
+										<li><a href="{{route('getdeletedh')}}">Xóa đơn hàng</a></li>
+                                        <li><a href="{{route('getupdatedh')}}">Chỉnh sửa đơn hàng</a></li>
 									</ul>
 								</li>
-                                <li class="active">
-									<a href="{{route('getrole')}}"><i class=" icon-collaboration"></i> <span>Quản lý phân quyền</span></a>
+                                <li>
+									<a href="#"><i class=" icon-collaboration"></i> <span>Quản lý phân quyền</span></a>
+									<ul>
+										<li><a href="{{route('getlistRole')}}">Quản lý</a></li>
+										<li><a href="{{route('getrole')}}">Phân quyền</a></li>
+									</ul>
+
 								</li>
-                                <li >
+                                <li>
 									<a href="#"><i class=" icon-make-group"></i> <span>Quản lý công ty</span></a>
 									<ul>
-                                        <li><a href="{{route('getaddcty')}}">Thêm công ty</a></li>
+									<li><a href="{{route('getaddcty')}}">Thêm công ty</a></li>
 										<li><a href="{{route('getdeletecty')}}">Xóa công ty</a></li>
                                         <li><a href="{{route('getupdatecty')}}">Chỉnh sửa công ty</a></li>
 									</ul>
@@ -269,7 +274,7 @@
 						<div class="col-md-8">
                             <div class="panel panel-flat">
 								<div class="panel-heading">
-									<h6 class="panel-title">Thông tin chi tiết về khách hàng</h6>
+									<h3 class="panel-title">Thông tin chi tiết về khách hàng</h6>
 									<div class="heading-elements">
 										<a href="#" class="heading-text">See all &rarr;</a>
 				                	</div>

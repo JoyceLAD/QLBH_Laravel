@@ -96,6 +96,9 @@ class HomeController extends Controller{
 
         ],[
             'password.min' => 'Mật khẩu cần ít nhất 6 ký tự',
+            'password.required' => 'Thiếu mật khẩu',
+            'ten.required' => 'Thiếu tên',
+
         ]);
         $userid = Session::get('userId') -> id_tk;
         $password = $request->input('password');
@@ -113,21 +116,54 @@ class HomeController extends Controller{
     }
     public function exportdh() 
     {
-        return Excel::download(new DhExport, 'DH.xlsx');
-    }
+        $userid = Session::get('userId') ;
+        if($userid != null)
+        {
+           // Excel::download(new DhExport, 'DH.xlsx');
+            return Excel::download(new DhExport, 'DH.xlsx');   
+        }else{
+            return redirect("login")->withErrors('Bạn cần đăng nhập trước');
+        }
+        }
     public function exportkh() 
     {
-        return Excel::download(new KhExport, 'DH.xlsx');
+        $userid = Session::get('userId');
+        if($userid != null)
+        {
+
+            Excel::download(new KhExport, 'KH.xlsx');
+            return Excel::download(new KhExport, 'KH.xlsx');
+        }else{
+            return redirect("login")->withErrors('Bạn cần đăng nhập trước');
+        }
+
+
     }
     public function importdh() 
     {
-        $import = Excel::import(new DhImport, request()->file('user_file'));
-        return redirect()->back()->with('success', 'Success!!!');
+        $userid = Session::get('userId');
+        if($userid != null)
+        {
+
+            $import = Excel::import(new DhImport, request()->file('user_file'));
+            return redirect()->back()->withSuccess('Import danh sách đơn hàng thành công');
+            }else{
+            return redirect("login")->withErrors('Bạn cần đăng nhập trước');
+        }
+
     }
     public function importkh() 
     {
-        $import = Excel::import(new KhImport, request()->file('user_file'));
-        return redirect()->back()->with('success', 'Success!!!');
+        $userid = Session::get('userId');
+        if($userid != null)
+        {
+
+            $import = Excel::import(new KhImport, request()->file('user_file'));
+            return redirect()->back()->withSuccess( 'Import danh sách khách hàng thành công');
+                }else{
+            return redirect("login")->withErrors('Bạn cần đăng nhập trước');
+        }
+
     }
 
 
