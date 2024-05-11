@@ -7,6 +7,8 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Khachhang;
 use App\Models\Phanquyen;
+use Illuminate\Support\Facades\Session;
+
 class Donhang extends Model
 {
     protected $table = 'donhang';
@@ -123,5 +125,14 @@ class Donhang extends Model
         return 0;
         }else return 1;
     }
+    public static function check_detailkh($id)
+    {
+        $userid = Session::get('userId') -> id_tk;
+        $result = Donhang::where('id_tk',$userid)
+        ->where('id_kh',$id)
+        ->first();
+        return $result;
+    }
+
 
 }

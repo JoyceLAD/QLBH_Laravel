@@ -80,12 +80,12 @@ class HomeController extends Controller{
     }
     public  function getupdateaccount()
     {
-        if (Session::has('userId')) {
+        //if (Session::has('userId')) {
             return view('Account');
-        }else
-        {
-            return redirect("login")->withSuccess('Bạn cần đăng nhập trước');
-        }
+        //}else
+        //{
+          //  return redirect("login")->withSuccess('Bạn cần đăng nhập trước');
+       // }
     }
 
     public  function postupdateaccount(Request $request)

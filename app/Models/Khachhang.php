@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Session;
+
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Hash;
 class Khachhang extends Model
@@ -38,7 +40,7 @@ class Khachhang extends Model
             'kh'=>$results2,
             'listdh'=>$results3
         ];
-        }
+    }
 
     
 }

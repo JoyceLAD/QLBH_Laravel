@@ -56,9 +56,10 @@ class AuthController extends Controller
             'password.required' => 'Thiếu mật khẩu',
         ]);
         $credentials = $request ->only('username', 'password');
+        $remember = $request->has('remember')?true:false;;
         $userId = Account::attempt($credentials);
         if($userId){
-            Session::put('userId',$userId );        
+            Session::put('userId',$userId );  
             return redirect()->route('dasboard')->withSuccess('Đăng nhập thành công');
         }else
         {

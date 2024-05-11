@@ -43,6 +43,9 @@
 </head>
 
 <body>
+	<script>
+		con
+	</script>
 @php
     $homeController = new \App\Http\Controllers\HomeController();
     $dsdh = $homeController->dsdh();

@@ -213,15 +213,9 @@ class KhController extends Controller
     }
     public function detailkh($id)
     {
-        $userid = Session::get('userId');
-        if($userid != null)
-        {
+
             $result = Khachhang::detailkh($id);
             return view('detailkh')->with('result', $result);    
-        }else
-        {
-            return redirect("login")->with('error','Bạn cần đăng nhập trước');
-        }
     }
 
 

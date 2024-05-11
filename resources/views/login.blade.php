@@ -109,7 +109,14 @@
 									<span class="text-danger">Thiếu mật khẩu</span>
 									@endif
                                 </div>
-                                                                
+                                <div class="form-group has-feedback has-feedback-left">
+									<div class="checkbox">
+										<label>
+											<input type="checkbox" name="remember" id="remember">
+											Remember me
+										</label>
+									</div>
+								</div>                     
                                 <div class="form-group">
                                     <button type="submit" id="button-submit" class="btn btn-primary btn-block">Đăng nhập <i class="icon-circle-right2 position-right"></i></button>
                                 </div>
@@ -121,7 +128,8 @@
 								</div> --}}
                             </form>
 							<div class="content-divider text-muted form-group"><span>Chưa có tài khoản</span></div>
-							<a href="{{route('getregister')}}"><button type="submit" id="button-submit" class="btn btn-primary btn-block" style="background-color:#808080 ">Đăng ký <i class="icon-circle-right2 position-right"></i></button>
+							<a href="{{route('getregister')}}">
+								<button type="submit" id="button-submit" class="btn btn-primary btn-block" style="background-color:#808080 ">Đăng ký <i class="icon-circle-right2 position-right"></i></button>
 							</a>
 							@if (session('error'))
 							<script>
