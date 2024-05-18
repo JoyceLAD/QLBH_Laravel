@@ -15,10 +15,7 @@ class CtController extends Controller
 {
     public function getaddcty()
     {
-        if (Session::has('userId')) {
-            return view('addcty');
-        }
-        return redirect("login")->withErrors('Bạn cần đăng nhập trước');
+        return view('addcty');
     }
     public  function postaddcty(Request $request)
     {
@@ -39,10 +36,7 @@ class CtController extends Controller
     }
     public function getdeletecty()
     {
-        if (Session::has('userId')) {
             return view('deletecty');
-        }
-        return redirect("login")->with('error','Bạn cần đăng nhập trước');
     }
 
     public  function postdeletecty(Request $request)
@@ -61,10 +55,7 @@ class CtController extends Controller
     }
     public function getupdatecty()
     {
-        if (Session::has('userId')) {
             return view('updatecty');
-        }
-        return redirect("login")->withErrors('Bạn cần đăng nhập trước');
     }
 
     public  function postupdatecty(Request $request)

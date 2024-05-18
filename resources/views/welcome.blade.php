@@ -338,9 +338,11 @@
                             <!-- Members online -->
                             <div class="panel bg-teal-400">
                                 <div class="panel-body">
-                                    <!-- <div class="heading-elements">
-                                        <span class="heading-text badge bg-teal-800">+53,6%</span>
-                                    </div> -->
+                                    <div class="heading-elements">
+                                        <ul class="icons-list">
+                                            <li><a data-action="reload"></a></li>
+                                        </ul>
+                                    </div>
 
                                     <h3 class="no-margin">{{ $homeController->tkh() }}	</h3>
                                     Tổng số khách hàng

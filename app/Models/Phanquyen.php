@@ -92,6 +92,13 @@ class Phanquyen extends Model
         ->get();
         return $result1;        
     }
+    public static function checkpqmiddle($id1,$id2)
+    {
+        $result = Donhang::where('id_tk',$id1)
+        ->where('id_kh',$id2)
+        ->first();
+        return $result;
+    }
  
 
 

@@ -74,7 +74,6 @@ class AuthController extends Controller
     }
     public function welcome()
     {
-        if (Session::has('userId')) {
             $id = Session::get('userId')->id_tk;
             if ($id !== null) {
                 $result = Phanquyen::check($id);
@@ -91,10 +90,7 @@ class AuthController extends Controller
                     return view('welcome');
                 }
             }
-    }else{
-        return redirect("login")->withSuccess('Bạn cần đăng nhập trước');
     }
 
 }
    
-}

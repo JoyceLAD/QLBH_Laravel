@@ -22,7 +22,7 @@ class RoleController extends Controller
                 return view('role');
             }
             else{
-                return redirect("/")->with('error','Bạn đã là nhân viên ');
+                return redirect("dasboard")->with('error','Bạn đã là nhân viên ');
             }
         }
         return redirect("login")->with('error','Bạn cần đăng nhập trước');
@@ -79,7 +79,7 @@ class RoleController extends Controller
             return redirect("login")->with('error','Bạn cần đăng nhập trước');
         }else if($role =="Nhân viên")
         {
-            return redirect()->route('list')->with('error','Tài khoản hiện đã được phân quyền bởi tài khoản khác');
+            return redirect()->route('dasboard')->with('error','Tài khoản hiện đã được phân quyền bởi tài khoản khác');
         }else if($role == "Trắng")
         {
             return redirect()->route('list')->with('error','Bạn chưa phân quyền cho tài khoản nào');

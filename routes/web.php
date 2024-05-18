@@ -100,6 +100,8 @@ Route::middleware('login')->group(function(){
     
 });
 Route::get('/detailkh/{id}',[KhController::class,'detailkh'])->middleware(['login','detailkh'])->name('detailkh1');
+//Route::get('/detailkh/{id}',[KhController::class,'detailkh'])->middleware(['login','detailkh'])->name('detailkh1');
+
 
 
 //Notify
