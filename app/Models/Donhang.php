@@ -66,6 +66,7 @@ class Donhang extends Model
     // Lấy danh sách đơn hàng của chủ
     public static function get_dsdh($id){
         $dsdh = Donhang::where('id_tk', $id)
+        ->orderBy('ngay','desc')
         ->take(10)
         ->get();
         return $dsdh;
