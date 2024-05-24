@@ -604,7 +604,7 @@
 						<label class="col-lg-3 control-label">Mã khách hàng muốn sửa:</label>
 						<div class="col-lg-9">
 							<input type="text" class="form-control" placeholder="" name="id_kh">
-						</div>
+			</div>
 					</div>
 					<div class="form-group">
 						<label class="col-lg-3 control-label">Tên đơn hàng muốn sửa:</label>

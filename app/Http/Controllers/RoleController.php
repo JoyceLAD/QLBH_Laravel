@@ -82,7 +82,7 @@ class RoleController extends Controller
             return redirect()->route('dasboard')->with('error','Tài khoản hiện đã được phân quyền bởi tài khoản khác');
         }else if($role == "Trắng")
         {
-            return redirect()->route('list')->with('error','Bạn chưa phân quyền cho tài khoản nào');
+            return redirect()->route('list')->with('success','Chưa phân quyền cho tài khoản nào');
         }else if($role == "Chủ")
         {
             return redirect()->route('list');

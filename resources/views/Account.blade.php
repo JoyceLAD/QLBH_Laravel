@@ -289,6 +289,10 @@
 											<label class="col-lg-3 control-label">Tên muốn sửa:</label>
                                             <div class="col-lg-9">
 												<input type="text" class="form-control" placeholder="" name="ten">
+												@if ($errors->has('ten'))
+												<span class="text-danger">{{ $errors->first('ten') }}</span>
+												@endif		
+
 											</div>
 										</div>
 
